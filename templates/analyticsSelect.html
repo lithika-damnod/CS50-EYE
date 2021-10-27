@@ -1,0 +1,86 @@
+{% extends 'eyeStudioLayout.html' %}
+
+{% block styles %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+        .analytic-tab-container{
+            display: inline-block; 
+            background-color: rgb(19, 18, 18); 
+            height: 700px; 
+            width: 1000px;    
+            margin-left: 300px;
+            margin-bottom: 200px; 
+            border-radius: 20px;
+            margin-top: -50px; 
+        }
+        .analytic-header{
+            color: white; 
+            font-family: 'Open Sans Condensed', sans-serif;
+            position: absolute; 
+            left: 56%;   
+            top: 30px; 
+            text-shadow: 2px 2px 8px rgb(44, 230, 255); 
+        }
+        .select-video-dropdown{
+            width: 300px; 
+            text-align: center; 
+            color: white; 
+            background-color: black; 
+            padding: 10px;
+            font-size: 1.2em;
+            font-family: calibri;
+            position: absolute;
+            top: 150px; 
+            left: 50%;    
+        }
+        .view-btn{
+            display: inline-flex; 
+            padding: 10px; 
+            background-color: rgb(222, 135, 135); 
+            border: none;
+            height: 15px;
+            width: 100px; 
+            font-size: 1.3em;
+            justify-content: center;
+            align-items: center; 
+            font-family: sans-serif;   
+            border-radius: 4px;
+            position: absolute;
+            top: 250px;
+            left: 57%;   
+        }
+        .view-btn:hover{
+            background-color: rgb(233, 115, 115); 
+            opacity: 80%; 
+            cursor: pointer; 
+        } 
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <script> 
+        document.getElementById("analyticsTab").classList.add("greyToblue");
+        document.getElementById("performanceTab").classList.remove("greyToblue");
+        document.getElementById("contentTab").classList.remove("greyToblue");
+    </script> 
+    <div class="analytic-tab-container">
+        <h1 class="analytic-header"> Select a video </h1>
+        <select class="select-video-dropdown">
+            {% for value in allVideosForId %}    
+                <option value="{{ value['id'] }}">{{ value['title'] }}</option>
+            {% endfor %}
+        </select>
+        <div class="view-btn">
+            <p>View</p> 
+        </div>
+    </div>
+    <script>
+        document.getElementsByClassName("view-btn")[0].addEventListener("click", function(){
+            let selectValue =   document.getElementsByClassName("select-video-dropdown")[0].value;    
+            let videoUrl = "/studio/analytics/" + selectValue; 
+            window.location.href = videoUrl;
+        });     
+    </script>   
+{% endblock %}
+

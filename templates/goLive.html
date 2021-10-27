@@ -1,0 +1,176 @@
+<!DOCTYPE html> 
+<html> 
+    <head>
+        <title>Go LIVE</title> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js" integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            body{
+                background-image: url("{{ url_for('static', filename='images/efe-kurnaz-RnCPiXixooY-unsplash.jpg')}}");
+                opacity: 80%;
+            }
+            .container{
+                display: inline-flex; 
+                justify-content: center;
+                align-items: center;
+                height: 100%; 
+                width: 100%;  
+            }
+            .logo-container{ 
+                height: 150px; 
+                width: 150px;
+                background-color: black; 
+                margin-top: 20px;
+                border-radius: 50%;  
+                overflow: hidden;
+                opacity: 100%; 
+            }
+            .basic-video-input-block{
+                display: inline-flex; 
+                background-color: black; 
+                height: 250px; 
+                width: 400px; 
+                border-radius: 4px; 
+            }
+            .basic-video-input-block:hover{ 
+                outline-width: 2px; 
+                outline-color: rgb(238, 130, 130); 
+                outline-style: solid; 
+            }
+            .video-inputBlock-container{
+                display: inline-block;
+                position: absolute; 
+                top: 610px;
+                margin-left: 20px; 
+            }
+            .addSource{
+                display: inline-flex;
+                background-color: none; 
+                height: 50px; 
+                width: 50px; 
+                position: relative; 
+                top: -105px;
+                margin-left: 25px;
+                cursor: pointer;   
+            }
+            .outputSpace{
+                display: inline-block; 
+                height: 350px;
+                width: 600px; 
+                background-color: black; 
+                position: absolute; 
+                top: 230px;
+                border-radius: 5px;   
+            }
+            #publishButton{
+                position: static; 
+                margin-bottom: 20px;
+                left: 550px; 
+            }
+            .configureMargin{
+                margin-right: 4px; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <a href="/">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Create-logos.jpeg')}}" height="100%" width="100%">
+                </div>
+            </a>
+            <div class="outputSpace">
+                <video id="mainView" autoplay width="100%" height="100%"></video>
+            </div>
+            <div class="video-inputBlock-container">
+                <span class="only-blocks-container">
+                    <div class="basic-video-input-block">
+                        <video id="webCam" autoplay width="100%" height="100%"></video>
+                    </div>
+                    <div class="basic-video-input-block">
+                        <video id="screenCam" autoplay width="100%" height="100%"></video>
+                    </div>
+                </span>
+                <button id="start">Start</button>
+                <button id="stop">Stop</button>
+                <script>
+                    async function startCapture() {
+                        try {
+                            videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                        } catch(err) {
+                            console.error("Error: " + err);
+                        }
+                    }
+
+                    function stopCapture(evt) {
+                        let tracks = videoElem.srcObject.getTracks();
+
+                        tracks.forEach(track => track.stop());
+                        videoElem.srcObject = null;
+                    }
+
+                    const videoElem = document.getElementById("screenCam");
+                    const startElem = document.getElementById("start");
+                    const stopElem = document.getElementById("stop");
+
+                    // Options for getDisplayMedia()
+
+                    var displayMediaOptions = {
+                    video: {
+                        cursor: "always"
+                    },
+                    audio: false
+                    };
+
+                    // Set event listeners for the start and stop buttons
+                    startElem.addEventListener("click", function(evt) {
+                    startCapture();
+                    }, false);
+
+                    stopElem.addEventListener("click", function(evt) {
+                    stopCapture();
+                    }, false);
+
+                </script>
+                <div class="addSource">
+                    <img src="{{ url_for('static', filename='images/icons8-add-100.png')}}" width="100%" height="100%">
+                </div>
+                <script> 
+                    $(".addSource").click(function(){
+                        console.log("cliked Add Source");
+                        var newDiv = document.createElement("div"); 
+                        newDiv.innerHTML = "<video id=\"webCam\" autoplay width=\"100%\" height=\"100%\"></video>";
+                        newDiv.classList.add("basic-video-input-block"); 
+                        newDiv.classList.add("configureMargin"); 
+                        document.querySelector(".only-blocks-container").appendChild(newDiv);  
+
+                    });
+                    $(".basic-video-input-block").click(function(){
+                        let videoSource = document.getElementById("webCam").srcObject; 
+                        document.getElementById("mainView").srcObject = videoSource;  
+                        console.log(videoSource); 
+                        console.log("cliked");
+                    }); 
+                </script>  
+                <script>
+                    var video = document.querySelector("#webCam");
+                    var mainView = document.querySelector("#mainView"); 
+                    function startWebCam() {
+                        if (navigator.mediaDevices.getUserMedia) {
+                            navigator.mediaDevices.getUserMedia({ video: true })
+                                .then(function (stream) {
+                                    video.srcObject = stream;
+                                })
+                                .catch(function (err0r) {
+                                    console.log("Something went wrong!");
+                                });
+                        }
+                    }
+                    startWebCam();
+                </script>
+                <button type="button" class="btn btn-dark" id="publishButton">Publish</button>   
+            
+            </div>  
+        </div>
+    </body>
+</html>

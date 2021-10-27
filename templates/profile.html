@@ -1,0 +1,164 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title>{{ channelName }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block styles %}
+    <style>
+        #sideNavBar{
+            display: none; 
+        }
+        .page-head{
+            display: inline-flex; 
+            height: 500px; 
+            width: 100%; 
+            margin-top: 20px; 
+            background-image: url("{{ url_for('static', filename='/images/mathias-p-r-reding-P0YeIVOyvSI-unsplash.jpg')}}"); 
+            background-repeat: no-repeat; 
+            background-size: cover;   
+            justify-content: center; 
+            align-items: center; 
+        }
+        .profile-picture-container{
+            display: inline-block; 
+            border: 3px solid white; 
+            height: 200px; 
+            width: 200px; 
+            background-color: black; 
+            border-radius: 50%; 
+            overflow: hidden; 
+        }
+        .page-head p{
+            font-family: 'Roboto', sans-serif;
+            color: white; 
+        }
+        .channel-name{
+            font-size: 2em; 
+            position: absolute; 
+            top: 370px;
+
+        }
+        .channel-subscriber-count{
+            font-size: 1.2em; 
+            position: absolute; 
+            top: 415px; 
+
+        }
+        .channel-content-container{
+            display: inline-flex; 
+            height: 250px; 
+            width: 70%; 
+            background-color: rgb(238, 220, 220); 
+            border-radius: 5px; 
+            align-items: center; 
+            position: relative; 
+            top: 10px;
+            left: 170px;
+            margin-bottom: 20px;   
+        }
+        .content-thumbnail-container{
+            display: inline-block; 
+            height: 230px; 
+            width: 400px; 
+            margin: 10px;
+            background-color: black; 
+            border-radius: 10px; 
+            overflow: hidden;  
+        }
+        .video-title{
+            display: inline-block; 
+            position: absolute; 
+            background-color: none; 
+            max-width: 450px; 
+            max-height: 70px; 
+            font-weight: bold; 
+            overflow: hidden; 
+            top: 15px;
+            left: 430px;   
+        }
+        .postedDate{
+            display: inline-block; 
+            position: relative; 
+            background-color: none; 
+            top: -20px; 
+            left: 15px; 
+        }
+        .video-creator-name{
+            display: inline-block; 
+            position: relative; 
+            background-color: none; 
+            left: -135px; 
+            top: 10px; 
+            color: rgb(112, 62, 62);
+            font-weight: bold;  
+        }
+    </style> 
+{% endblock %}
+
+{% block content %}
+
+    <script> 
+        var indexUp = 0; 
+    </script> 
+
+    <div class="page-head">
+        <div class="profile-picture-container">
+            <p id="creatorPicPath" style="display: none; ">{{ channelNameAll["profilePicturePath"] }}</p>
+            <img src="{{ url_for('static', filename='profile_cache/9/unnamed (2).jpg') }}" height="100%" width="100%" style="object-fit: cover;" id="creatorPic">
+        </div>
+        <script> 
+            let picUrlCopied = document.getElementById("creatorPicPath").innerHTML;  
+            document.getElementById("creatorPic").src = "{{ url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", picUrlCopied);  
+        </script> 
+        <p class="channel-name">{{ channelName }}</p>
+        <p class="channel-subscriber-count">{{ subscribersCount }} Subscribers</p>
+    </div>
+    {% for item in videosAllSelected %}
+        <div class="channel-content-container">
+            {% for thumbnail in thumbnailsAllSelected %}
+                {% if item["id"] == thumbnail["video_id"] %}
+                <div class="content-thumbnail-container">
+                    <p style="display: none; " class="thumbnailUrl">{{ thumbnail["thumbnail_path"] }}</p> 
+                    <img src="" class="thumbnailPic" height="100%" width="100%">
+                </div>
+                <script>
+
+                    var thumbnail__path = document.getElementsByClassName("thumbnailUrl")[indexUp].innerHTML;  
+                    document.getElementsByClassName("thumbnailPic")[indexUp].src = "{{ url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", thumbnail__path);
+                    
+                    document.getElementsByClassName("channel-content-container")[indexUp].onclick = function () { 
+                        let videoIDDCOPIED = "{{ item['id']}}"; 
+                        let videoUrl = "/video/" + videoIDDCOPIED; 
+                        window.location.href = videoUrl;
+                    }; 
+                    
+                    indexUp++; 
+                </script> 
+                {% endif %}
+            {% endfor %}
+            <div  class="videoHeading">
+                <p class="videoId" style="display: none;"> 1 </p>
+                <p class="video-title">{{ item["title"] }}</p>
+            </div>
+            <div class="postedDate">
+                {% for view in viewsArray %}
+                    {% if view.videoId == item["id"] %}
+                        <p>{{ view.views }} views : {{ generateDateString(item["uploadTime"]) }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div> 
+            <div class="video-creator-name">
+                <p>{{ channelName }}</p>
+            </div>
+        </div>
+
+    {% endfor %}
+    
+
+{% endblock %}

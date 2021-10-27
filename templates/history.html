@@ -1,0 +1,141 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title> 
+        History
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Glory&display=swap" rel="stylesheet">
+
+{% endblock %}
+
+{% block styles %}
+    <style> 
+
+        #historyLabel{
+            position: absolute; 
+            margin-top: 110px;
+            margin-left: 30px;   
+            color: rgb(82, 79, 79);
+            font-family: 'Glory', sans-serif;
+
+        }
+        #sideNavBar{
+            display: none; 
+        }
+        .container{ 
+            position: absolute; 
+            top: 180px; 
+            justify-content: center; 
+            align-items: center; 
+            left: 50px; 
+
+        }
+        .subContainer{ 
+            border-radius: 10px; 
+            background-color:rgb(241, 227, 227);  
+            padding: 20px; 
+            margin-top: 10px; 
+        }
+        .history-block{
+            display:inline-block; 
+            height: 35px; 
+            width: 90%; 
+            background-color: rgb(159, 180, 185);
+            border-radius: 4px; 
+            align-items: center;  
+            margin-bottom: 3px; 
+            justify-content: center;
+        }
+        .history-title{
+            position: relative; 
+            top: 5px; 
+        }
+        .HistoryDate{
+            margin-bottom: 15px; 
+        }
+        .history-time{
+            position: relative; 
+            top: -35px; 
+            left: 280px; 
+        }
+        .history-delete{
+            position: relative; 
+            left: 920px;
+            top: -76px;  
+        }
+        .history-container{
+            width: 900px; 
+            background-color: rgb(225, 207, 243); 
+            height: fit-content; 
+            margin-bottom: 5px; 
+            border-radius: 10px; 
+        }
+        .history-container p{
+            margin-left: 5px; 
+        }
+        .historyDetails{
+            display: inline-flex;
+            align-items: center;
+            align-content: center; 
+            justify-content: center;  
+        }
+        .history-label{
+            margin-top: 2px; 
+        }
+        .historyDetails img{
+            position: absolute; 
+            left: 880px;
+            cursor: pointer;   
+        }
+        .historyDetails img:hover{
+            padding: 2px; 
+        }
+    </style> 
+{% endblock %}
+
+{% block content %}
+    <script> 
+        var i = 0; 
+    </script>
+
+    <h3 id="historyLabel">History</h3>
+    <div class="container">
+        <div class="subContainer"> 
+            {% for row in historySelected %}
+                {% for video in videosSelected %}
+                    {% if row["videoId"] == video["id"] %}
+                        <div class="history-container">
+                            <div class="historyDetails">
+                                <p class="history-label"> {{ video["title"] }}</p> 
+                                <p style="position: absolute; left: 750px;  ">{{ generateDateString(row["watchTime"]) }}</p>
+                                <img src="{{ url_for('static', filename='images/icons8-close-window-96.png')}}" height="25px" width="25px" class="x-icon" data-history-id="{{ row['id'] }}">
+                            </div> 
+                        </div>
+                        <script>
+                            var changeThis = document.getElementsByClassName("history-container")[i]; 
+                            var crossIcon = document.getElementsByClassName("x-icon")[i]; 
+                            crossIcon.addEventListener("click", function(){
+                                var deleteId = "{{ row['id'] }}";
+                                console.log(deleteId);  
+                                $.ajax({
+                                    data: { 
+                                        id: deleteId
+                                    }, 
+                                    type: 'POST', 
+                                    url: "/api/delete/history"
+                                })  
+                                setTimeout(function(){
+                                    window.location.reload(1);
+                                }, 1000);
+                            });
+
+                            i++; 
+                        </script> 
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,443 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <style>  
+            
+            /* Extra small devices (phones, 600px and down) */
+            @media only screen and (max-width: 600px){
+                body{
+                    background-color: #EBEBEB;
+                }   
+                #logo{  
+                    display: inline-block;
+                    position: absolute;
+                    top: 95px;
+                    left: 44.5%;
+                }
+                #signInText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 215px;
+                    left: 45%;
+
+                }
+                #loginForm{
+                    display:inline-block;
+                    position: absolute;
+                    top: 290px; 
+                    left: 40%;
+                    padding: 3px;
+                }
+
+                #email{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password::placeholder , #email::placeholder{
+                    font-family: calibri;
+                    font-size: 20px;
+                }
+                #password:hover, #email:hover{
+                    border: 1px solid red;
+                }
+                #signInButton{
+                    display: inline-block;
+                    background-color: rgb(218, 126, 126);
+                    border-radius: 10px;
+                    width: 120px;
+                    height: 50px;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 2px;
+                    position: absolute;
+                    top: 145px;
+                    left: 23.5%;
+                    font-family:'Karla', sans-serif;
+                    font-weight: bold;
+                    color: white;
+                }
+                #signInButton p{
+                    position: absolute;
+                    top: -5%;
+                    left: 25%;
+                }
+                #signInButton:hover{
+                    background-color: rgb(219, 64, 64);
+                }
+                #signUpHere{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 495px;
+                    left: 43%;
+                }
+                button{
+                    border: none;   
+                }
+            }
+
+            /* Small devices (portrait tablets and large phones, 600px and up) */
+            @media only screen and (min-width: 600px) {
+                body{
+                background-color: #EBEBEB;
+                }   
+                #logo{  
+                    display: inline-block;
+                    position: absolute;
+                    top: 95px;
+                    left: 44.5%; 
+                }
+                #signInText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 215px;
+                    left: 45%;
+
+                }
+                #loginForm{
+                    display:inline-block;
+                    position: absolute;
+                    top: 290px; 
+                    left: 40%;
+                    padding: 3px;
+                }
+
+                #email{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password::placeholder , #email::placeholder{
+                    font-family: calibri;
+                    font-size: 20px;
+                }
+                #password:hover, #email:hover{
+                    border: 1px solid red;
+                }
+                #signInButton{
+                    display: inline-block;
+                    background-color: rgb(218, 126, 126);
+                    border-radius: 10px;
+                    width: 120px;
+                    height: 50px;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 2px;
+                    position: absolute;
+                    top: 145px;
+                    left: 23.5%;
+                    font-family:'Karla', sans-serif;
+                    font-weight: bold;
+                    color: white;
+                }
+                #signInButton p{
+                    position: absolute;
+                    top: -5%;
+                    left: 25%;
+                }
+                #signInButton:hover{
+                    background-color: rgb(219, 64, 64);
+                }
+                #signUpHere{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 495px;
+                    left: 43%;
+                }
+                button{
+                    border: none;   
+                }
+            }
+
+            /* Medium devices (landscape tablets, 768px and up) */
+            @media only screen and (min-width: 768px) {
+                body{
+                background-color: #EBEBEB;
+                }   
+                #logo{  
+                    display: inline-block;
+                    position: absolute;
+                    top: 95px;
+                    left: 44.5%;
+                }
+                #signInText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 215px;
+                    left: 45%;
+
+                }
+                #loginForm{
+                    display:inline-block;
+                    position: absolute;
+                    top: 290px; 
+                    left: 40%;
+                    padding: 3px;
+                }
+
+                #email{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password::placeholder , #email::placeholder{
+                    font-family: calibri;
+                    font-size: 20px;
+                }
+                #password:hover, #email:hover{
+                    border: 1px solid red;
+                }
+                #signInButton{
+                    display: inline-block;
+                    background-color: rgb(218, 126, 126);
+                    border-radius: 10px;
+                    width: 120px;
+                    height: 50px;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 2px;
+                    position: absolute;
+                    top: 145px;
+                    left: 23.5%;
+                    font-family:'Karla', sans-serif;
+                    font-weight: bold;
+                    color: white;
+                }
+                #signInButton p{
+                    position: absolute;
+                    top: -5%;
+                    left: 25%;
+                }
+                #signInButton:hover{
+                    background-color: rgb(219, 64, 64);
+                }
+                #signUpHere{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 495px;
+                    left: 43%;
+                }
+                button{
+                    border: none;   
+                }
+            }
+
+            /* Large devices (laptops/desktops, 992px and up) */
+            @media only screen and (min-width: 992px) {
+                body{
+                background-color: #EBEBEB;
+                }
+                #logo{
+                    display: inline-block;
+                    position: absolute;
+                    top: 95px;
+                    left: 44.5%;
+                }
+                #signInText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 215px;
+                    left: 45%;
+
+                }
+                #loginForm{
+                    display:inline-block;
+                    position: absolute;
+                    top: 290px; 
+                    left: 41%;
+                    padding: 3px;
+                }
+
+                #email{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password::placeholder , #email::placeholder{
+                    font-family: calibri;
+                    font-size: 20px;
+                }
+                #password:hover, #email:hover{
+                    border: 1px solid red;
+                }
+                #signInButton{
+                    display: inline-block;
+                    background-color: rgb(218, 126, 126);
+                    border-radius: 10px;
+                    width: 120px;
+                    height: 50px;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 2px;
+                    position: absolute;
+                    top: 145px;
+                    left: 23.5%;
+                    font-family:'Karla', sans-serif;
+                    font-weight: bold;
+                    color: white;
+                }
+                #signInButton p{
+                    position: absolute;
+                    top: -5%;
+                    left: 25%;
+                }
+                #signInButton:hover{
+                    background-color: rgb(219, 64, 64);
+                }
+                #signUpHere{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 495px;
+                    left: 43%;
+                }
+                button{
+                    border: none;   
+                }
+                
+            
+            }
+
+
+            /* Extra large devices (large laptops and desktops, 1200px and up) */
+            @media only screen and (min-width: 1200px) {
+                body{
+                background-color: #EBEBEB;
+                }
+                #logo{  
+                    display: inline-block;
+                    position: absolute;
+                    top: 95px;
+                    left: 44.5%;
+                }
+                #signInText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 215px;
+                    left: 45%;
+
+                }
+                #loginForm{
+                    display:inline-block;
+                    position: absolute;
+                    top: 290px; 
+                    left: 41%;
+                    padding: 3px;
+                }
+
+                #email{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password{
+                    box-sizing: border-box;
+                    height: 50px;
+                    width: 260px;
+                    font-size: 20px;
+                    padding: 6px;
+                }
+                #password::placeholder , #email::placeholder{
+                    font-family: calibri;
+                    font-size: 20px;
+                }
+                #password:hover, #email:hover{
+                    border: 1px solid red;
+                }
+                #signInButton{
+                    display: inline-block;
+                    background-color: rgb(218, 126, 126);
+                    border-radius: 10px;
+                    width: 120px;
+                    height: 50px;
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 2px;
+                    position: absolute;
+                    top: 145px;
+                    left: 23.5%;
+                    font-family:'Karla', sans-serif;
+                    font-weight: bold;
+                    color: white;
+                }
+                #signInButton p{
+                    position: absolute;
+                    top: -5%;
+                    left: 25%;
+                }
+                #signInButton:hover{
+                    background-color: rgb(219, 64, 64);
+                }
+                #signUpHere{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 495px;
+                    left: 43%;
+                }
+                button{
+                    border: none;   
+                }
+            }
+        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <a href="/"><div id="logo">
+            <img src="{{url_for('static', filename='images/logo2.png')}}"  alt="CS50 EYE" height = "150px" width="170px">
+        </div></a>  
+        <div id="signInText"> 
+            <p style="font-family: 'Ubuntu', sans-serif; font-weight: bold; font-size: 25px;">Please sign in </p> 
+        </div>
+        <div id="loginForm">
+            <form action='/login' method='POST'>
+                <input type="email" id="email" name="email" placeholder="Email Address"><br><br>
+                <input type="password" id="password" name="password" placeholder="Password">
+                <button type="submit"><div id="signInButton">
+                    <p>Sign in</p>
+                </div></button>
+            </form> 
+        </div>
+        <div id="signUpHere">
+            <p style="font-family: Calibri;" >Dont' have an Account? <a href="/signup">Sign Up</a></p>
+        </div>
+    </body>
+</html> 

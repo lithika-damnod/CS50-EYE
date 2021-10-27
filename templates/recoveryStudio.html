@@ -1,0 +1,529 @@
+<!DOCTYPE html> 
+<html> 
+    <head>
+        <title>Eye Studio</title> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style> 
+            body{
+                background-color: rgb(24, 23, 23); 
+            }
+            .page-heading{
+                color: white; 
+                font-family: 'Bad Script', cursive;
+                font-size: 2em;
+                margin-left: 40px; 
+                margin-top: -20px;  
+                margin-bottom: 150px;  
+                position: fixed;
+                z-index: 100;
+            }
+            .neon{
+                text-shadow:
+                    0 0 7px #fff,
+                    0 0 10px #fff,
+                    0 0 21px #fff,
+                    0 0 42px rgb(241, 209, 209),
+                    0 0 82px rgb(241, 209, 209),
+                    0 0 92px rgb(241, 209, 209),
+                    0 0 102px rgb(241, 209, 209),
+                    0 0 151px rgb(241, 209, 209);
+            }
+            @keyframes fadeIn {
+                25%{
+                    opacity: 60%; 
+                }
+                50%{
+                    opacity: 100%; 
+                }
+                75%{
+                    opacity: 60%; 
+                }
+                100%{
+                    opacity: 100%;
+                }
+                
+            }
+            .animation-spooky{
+                animation-name: fadeIn; 
+                animation-duration: 2s;
+                animation-iteration-count: infinite;  
+            }
+            .nav-btn{
+                display: inline-flex; 
+                height: 40px; 
+                width: 200px; 
+                background-color: rgb(46, 46, 46);
+                align-items: center; 
+                justify-content: center;
+                border-radius: 5px;
+            }
+            .nav-btn p{
+                color: rgb(156, 154, 154); 
+                font-weight: bolder; 
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+            .nav-btn img{
+                margin-right: 10px; 
+            }
+            .nav-side{
+                display: inline-flex; 
+                position: absolute; 
+                top: 300px; 
+                flex-flow: wrap; 
+                z-index: 5; 
+            }
+            .nav-position1{
+                position: absolute; 
+                top: 15px; 
+                left: 40px;  
+                cursor: pointer; 
+            }
+            .nav-position2{
+                position: absolute; 
+                top: 60px; 
+                left: 40px; 
+                cursor: pointer; 
+            }
+            .nav-position3{
+                position: absolute; 
+                top: 105px; 
+                left: 40px; 
+                cursor: pointer; 
+            }
+            .performance-container{
+                display: inline-flex;
+                position: absolute; 
+                background-color: rgb(19, 18, 18); 
+                height: 700px; 
+                width: 1000px; 
+                margin-left: 300px;
+                margin-bottom: 200px; 
+                border-radius: 20px;
+                margin-top: -50px; 
+                z-index: 10; 
+                display: none; 
+            }
+            .performance-chart{
+                display: inline-block; 
+                height: 500px; 
+                width: 500px; 
+                margin-top: 100px; 
+                margin-left: 50px; 
+            }
+            .subscibersOverview{
+                display: inline-block; 
+                height: 300px; 
+                width: 400px; 
+                background-color: white;
+                margin-left: 50px;  
+                margin-top: 50px; 
+                border-radius: 10px; 
+                margin-right: 20px;
+                opacity: 50%;   
+                overflow: hidden;  
+
+            }
+            #subscribersOverview-creatorName{
+                color: black; 
+                font-family: 'Ubuntu', sans-serif;
+                font-size: 2em; 
+                position: relative; 
+                top: 20px; 
+                left: 75px; 
+            }
+            #currentSubscribers{
+                color: rgb(43, 42, 42); 
+                font-family: 'Ubuntu', sans-serif; 
+                font-size: 1.3em; 
+                position: relative; 
+                top: 0px; 
+                left: 80px; 
+            }
+            #newSubscribers{
+                color: rgb(43, 42, 42); 
+                font-family: 'Ubuntu', sans-serif; 
+                font-size: 1em; 
+                position: relative; 
+                top: 10px; 
+                left: 60px;  
+                background-color: rgb(182, 79, 79); 
+                color: white; 
+                padding: 5px;
+                border-radius: 5px;  
+            }
+            #newLikes{
+                color: rgb(43, 42, 42); 
+                font-family: 'Ubuntu', sans-serif; 
+                font-size: 1em; 
+                position: relative; 
+                top: 0px; 
+                left: 60px;  
+                background-color: rgb(79, 182, 79); 
+                color: white;
+                padding: 5px;
+                border-radius: 5px; 
+            }
+            #newComments{
+                color: rgb(43, 42, 42); 
+                font-family: 'Ubuntu', sans-serif; 
+                font-size: 1em; 
+                position: relative; 
+                top: -10px; 
+                left: 60px;  
+                background-color: rgb(163, 182, 79); 
+                color: white; 
+                padding: 5px;
+                border-radius: 5px;
+            }
+            .greyToblue{
+                background-color: rgb(27, 30, 39);  
+            }
+            .content-tab-container{
+                display: inline-block;
+                position: absolute; 
+                background-color: rgb(19, 18, 18); 
+                height: fit-content; 
+                width: 1000px; 
+                margin-left: 300px;
+                margin-bottom: 200px; 
+                border-radius: 20px;
+                margin-top: 240px;
+                z-index: 11; 
+            }
+            .video-box{
+                display: block; 
+                background-color: white; 
+                height: 150px; 
+                width: 80%; 
+                margin-bottom: 12px; 
+                border-radius: 10px; 
+                opacity: 80%;
+                position: relative; 
+                left: 100px; 
+            }
+            .align-boxes{
+                margin-top: 30px; 
+                margin-bottom: 30px; 
+            }
+            .thumbnail{
+                display: block; 
+                position: absolute; 
+                height: 93%; 
+                width: 32%; 
+                background-color: black; 
+                margin: 5px;  
+                border-radius: 8px;
+                overflow: hidden; 
+            }  
+            .video-title{
+                display: inline-block; 
+                position: absolute; 
+                background-color:none; 
+                width:65%;
+                height: fit-content;  
+                left: 275px; 
+                font-weight: bolder; 
+                font-family: calibri;
+                font-size: 1.1em;
+
+            }  
+            .video-description{
+                display: inline-block; 
+                background-color: none;  
+                padding: 5px; 
+                height: fit-content; 
+                width: fit-content; 
+                max-width: 64%;  
+                max-height: 48%; 
+                position: absolute; 
+                font-family: calibri; 
+                font-weight: bold; 
+                color: rgb(65, 63, 63);
+                left: 270px;
+                top: 45px;    
+                margin-bottom: 10px; 
+                overflow: hidden; 
+            }
+            .video-box:hover{
+                background-color: rgb(221, 220, 220); 
+            }
+            .video-box:hover .video-title{
+                transition: 0.3s;
+                display: none; 
+            }
+            .video-box:hover .video-description{
+                transition: 0.3s;
+                display: none;
+            }
+            .video-box:hover .afterHover-container{
+                display: inline-flex; 
+            }
+            .afterHover-container{
+                display: inline-flex; 
+                position: absolute; 
+                background-color: none; 
+                width: 64%; 
+                height: 48%;    
+                left: 270px; 
+                top: 25%; 
+                align-items: center; 
+                justify-content: center;
+                display: none; 
+            }
+            .resourceButton{
+                margin: 20px;
+                opacity: 80%;    
+            }
+            .changeIconBg:hover{
+                display: inline-block; 
+                background-color: rgb(204, 152, 152); 
+                padding: 3px; 
+                border-radius: 50%; 
+                cursor: pointer; 
+            }
+            .displayNone{
+                display: none; 
+            }
+            .edit-video-container{
+                display: inline-block;
+                position: absolute; 
+                background-color: rgb(19, 18, 18); 
+                height: fit-content;
+                height: 1000px;  
+                width: 1000px; 
+                margin-left: 300px;
+                margin-bottom: 200px; 
+                border-radius: 20px;
+                margin-top: 240px;
+                z-index: 12;   
+            }
+            input[type=text]{
+                background-color: black;
+                color: white;
+                border: 2px solid white; 
+                border-radius: 5px;  
+                font-size: 1em;
+                padding: 2px;  
+            }
+            textarea{
+                background-color: black;
+                color: white;
+                border: 2px solid white; 
+                border-radius: 5px;  
+                font-size: 1.2em;
+                padding: 2px;
+            }
+            #videoTitle{
+                margin-left: 50px; 
+                height: 30px; 
+                width: 600px; 
+            }
+            label{
+                margin-left: 60px;
+                color: rgb(145, 142, 142);  
+                font-family: 'Courier New', Courier, monospace;
+                font-weight: bolder;
+                font-size: 1.1em;  
+            }
+            .editContent-form{
+                position: absolute; 
+                top: 120px; 
+            }
+            #videoDescription{
+                margin-left: 50px;
+                height: 300px; 
+                width: 700px;
+            }
+            .input-btn{
+                display: inline-flex; 
+                background-color:rgb(27, 30, 39); 
+                height: 50px;
+                width: 250px;
+                justify-content: center;
+                align-items: center; 
+            }
+            .btn-position1{
+                position: absolute; 
+                top: 500px;
+                left: 80px;    
+            }
+            .btn-position2{
+                position: absolute; 
+                top: 560px; 
+                left: 80px; 
+            }
+            .input-btn:hover{
+                background-color:rgb(32, 37, 54); 
+                cursor: pointer; 
+            }
+        </style>    
+    </head>
+    <body>
+        <div class="page-heading neon animation-spooky"> 
+            <h1>Eye Studio</h1>
+        </div>
+        <div class="nav-side">
+            <div class="nav-btn nav-position1 greyToblue" id="performanceTab">
+                <img src="{{ url_for('static', filename='images/icons8-speed-90 (1).png')}}" height="25" width="25">
+                <p>Performance</p>
+            </div>
+            <div class="nav-btn nav-position2" id="contentTab">
+                <img src="{{ url_for('static', filename='images/icons8-storyfire-100.png')}}" height="25" width="25">
+                <p>Content</p>
+            </div>
+            <div class="nav-btn nav-position3" id="analyticsTab">
+                <img src="{{ url_for('static', filename='images/bar-chart (1).png')}}" height="25" width="25">
+                <p>Analytics</p>
+            </div>
+            <script> 
+                $("#performanceTab").click(function(){
+                    console.log("Performance Tab Clicked")
+                }); 
+                $("#contentTab").click(function(){
+                    console.log("Content Tab Clicked")
+                    var contentVisibleStat =false; 
+                }); 
+                $("#analyticsTab").click(function(){
+                    console.log("Analytics Tab Clicked")
+                }); 
+            </script> 
+            <div class="performance-container displayNone"> 
+                <div class="performance-chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="subscibersOverview">
+                    <p id="subscribersOverview-creatorName">Lithika Damnod</p>
+                    <p id="currentSubscribers"><span id="subscibersINT">256</span> Subscribers</p>
+                    <p id="newSubscribers">New 14 Subscribers</p>
+                    <p id="newLikes">New 1000 Likes</p>
+                    <p id="newComments">New 5 Comments</p> 
+                </div>
+
+                <script>
+                    let currentSubscribers = parseInt(document.getElementById("subscibersINT").innerHTML); 
+                    let newSubscribers = parseInt(document.getElementById("newSubscribers").innerHTML); 
+                    let newLikes = parseInt(document.getElementById("newLikes").innerHTML); 
+                    let newComments = parseInt(document.getElementById("newSubscribers").innerHTML);    
+                    window.addEventListener('load', function(){
+                                    
+                        for(let i=0; i<currentSubscribers; i++){
+                            document.getElementById("subscibersINT").innerHTML = i;
+                        }
+                    }); 
+ 
+                </script> 
+
+            </div>
+
+            <script>
+                let myChart = document.getElementById('myChart').getContext('2d'); 
+                let massPopChart = new Chart(myChart, {
+                    type: 'line', 
+                    data: {
+                        labels: ['Boston', 'Warcestor', 'SpringField', 'Lowell', 'Cambridge', 'New Bedford'], 
+                        datasets: [{
+                            label: 'Population', 
+                            data:[
+                                617594, 
+                                181045, 
+                                153060,
+                                106519,
+                                105162,
+                                95072
+                            ], 
+                            backgroundColor:'white',
+                            borderColor: 'white'
+                        }]
+                    }, 
+                    options: {}
+                });  
+                
+            </script> 
+        </div>
+        <!-- Content Tab -->
+        <div class="content-tab-container displayNone">
+            <div class="align-boxes">
+                <script> 
+                    var i = 0; 
+                </script> 
+                {% for item in video %}
+                <div class="video-box">
+                    <div class="thumbnail">
+                        <img src="" height="100%" width="100%" class="thumbnailImage">
+                    </div>
+                    {% for image in thumbnail %}
+                        {% if image["video_id"] == item["id"] %}
+                            <p style="display: none; " class="thumbnailAddress">{{ image["thumbnail_path"] }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <script> 
+                        var thumbnailPath = document.getElementsByClassName("thumbnailAddress")[i].innerHTML;  
+                        document.getElementsByClassName("thumbnailImage")[i].src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", thumbnailPath); 
+                        i++; 
+                    </script> 
+                    <div class="video-title">
+                        <p>{{ item["title"]}}</p>
+                    </div>
+                    <div class="video-description">
+                        <p>
+                            {{ item["description"] }}
+                        </p>
+                    </div>
+                    <div class="afterHover-container">
+                        <div class="resourceButton changeIconBg" id="edit-button">
+                            <img src="{{ url_for('static', filename='images/icons8-pencil-64.png')}}" height="35px" width="35px">
+                        </div>
+                        <div class="resourceButton changeIconBg" id="trash-button">
+                            <img src="{{ url_for('static', filename='images/icons8-trash-96.png')}}" height="35px" width="35px">
+                        </div>
+                        <div class="resourceButton changeIconBg" id="stream-button">
+                            <img src="{{ url_for('static', filename='images/icons8-play-90.png')}}" height="35px" width="35px">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div> 
+        <!-- edit page-->
+        <div class="edit-video-container">
+            <div class="video-currentName">
+                <p style="font-weight: bolder; color: white; font-family: sans-serif; font-size: 1.5em; margin-left: 30px; ">Samsung Galaxy Z Fold 3 Impressions: 3 New Features!</p>
+            </div>
+            <div class="editContent-form clearAll">
+                <form>
+                    <label>Title</label><br><br>
+                    <input type="text" name="title" id="videoTitle"><br><br><br>
+                    <label>Description</label><br><br>
+                    <textarea type="text" name="description" id="videoDescription" maxlength = "5000"></textarea> 
+                    <input type="file" name="newVideo" style="display: none;" id="inputVideo">
+                    <input type="file" name="newThumbnail" style="display: none;" id="inputThumbnail">
+                    <!-- intput buttons -->                    
+                    <div class="input-btn btn-position1" id="changeVideo">
+                        <p style="color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 1.2em;  ">Change Video</p>
+                    </div>
+                    <div class="input-btn btn-position2" id="changeThumbnail">
+                        <p style="color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 1.2em;  ">Change Thumbnail</p>
+                    </div>
+
+                </form>
+                <script> 
+                    document.getElementById("changeVideo").addEventListener("click", function(){
+                        document.getElementById("inputVideo").click(); 
+                    });
+
+                    document.getElementById("changeThumbnail").addEventListener("click", function(){
+                        document.getElementById("inputThumbnail").click(); 
+                    }); 
+                </script> 
+            </div>
+        </div>
+
+        </body> 
+</html>

@@ -1,0 +1,159 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title>CS50 EYE</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block styles %}
+    <style> 
+        #videoDetails{
+            position: absolute; 
+            top: 200px;
+            left: 100px;
+        }
+        .loopImage{
+            margin: 30px;
+            margin-left: 0px;
+            margin-top: -25px;
+            object-fit: fill;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .filePath{
+            display: none;          
+        }
+        .videoContainer{
+            display: inline-block; 
+            background-color: rgb(238, 220, 220);
+            width: 350px;
+            height: 400px;
+            margin-left: 105px;
+            margin-top: 130px;
+            margin-right: -50px;
+            border-radius: 10px;
+            margin-bottom: -65px;
+        }
+        #creatorName{
+            position: relative; 
+            left: 10px;
+            top: 30px;
+            opacity: 80%;
+        }
+        #creatorNameContainer{
+            display: inline-block;
+            position: absolute;
+            width: 300px;
+            height: 30px;
+            background-color: none;
+            display: flex;
+            align-items: center;
+            color: black;
+            top: 430px;
+
+        }
+        #titleNameContainer{
+            display:inline-flex; 
+            align-items: center; 
+            color: black; 
+            background-color: none;
+            position: absolute;
+            top: 355px;
+            width: 300px; 
+            height: 65px;
+            
+        }
+        #title{
+            max-width: 330px;
+            max-height: 20px;
+            margin-left: 10px;
+            margin-top: -20px;
+        }
+        #creatorName:hover{
+            opacity: 100%;
+        }
+        #creatorName{ 
+            position: relative; 
+            top: -5px;
+            left: 15px;  
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+            font-weight: bold;    
+        }
+        .loopImage:hover{
+            cursor: pointer; 
+        }
+        .viewsDisplay{
+            position: relative; 
+            left: 10px;
+            top: 15px;
+            opacity: 80%;
+            font-weight: bold; 
+        }
+        .dateDisplay{
+            position: relative; 
+            left: 10px; 
+            top: 0px; 
+            opacity: 80%; 
+            font-weight: bold;
+            color: rgb(42, 42, 92);  
+        }
+        .profile-pic-container{
+            position: relative; 
+            background-color: black; 
+            height: 50px; 
+            width: 50px; 
+            border-radius: 50%;   
+            top: -42px;
+            left: 290px;  
+        }
+    </style>     
+{% endblock %}
+
+{% block content %}
+    <script>
+        var i=0; 
+        let pValue;
+        let video__id; 
+    </script> 
+    {%for path in videoSelect %}
+            <div class="videoContainer"> 
+                <p class="filePath">{{ path["thumbnail_path"]  }}</p><br> 
+                <p class="videoId-COPIED" style="display: none;"> {{ str(path["video_id"]) }} </p>
+                    <img width="350" height="220" class="loopImage" src=""></img><br>
+                
+                {% for item in videosAllSelected%}
+                    {% if path["video_id"] == item["id"] %}
+                        <p id="title" style="font-family: 'Roboto', sans-serif;">{{ item["title"] }} </p>
+                        {% for view in viewsArray %}
+                            {% if view.videoId == path["video_id"] %}
+                                <p class="viewsDisplay">{{ view.views }} views</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p class="dateDisplay"> {{ generateDateString(item["uploadTime"]) }} </p> 
+                        {% for index in channelsAllSelected %}
+                            {%  if item["user_id"] == index["user_id"] %}    
+                                <p id="creatorName"> {{ index["channel_name"] }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %} 
+                
+                <script>
+                    pValue = document.getElementsByClassName("filePath")[i].innerHTML;  
+                    document.getElementsByClassName("loopImage")[i].src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", pValue);
+                    document.getElementsByClassName("loopImage")[i].onclick = function () { 
+                        let videoIDDCOPIED = "{{ path['video_id']}}"; 
+                        let videoUrl = "/video/" + videoIDDCOPIED; 
+                        window.location.href = videoUrl;
+                    }; 
+
+                    i++;
+                    
+                </script>   
+            </div>
+    
+    {% endfor %}
+ 
+{% endblock %}

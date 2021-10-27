@@ -1,0 +1,128 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title>Feed</title>
+{% endblock %}
+
+{% block styles %}
+    <style> 
+        .feed-container{
+            position: absolute; 
+            display: inline-block; 
+            background-color: none;
+            height: fit-content; 
+            width: 92%; 
+            top: 95px;
+            left: 80px;    
+        }
+        .feed-heading{
+            position: absolute; 
+            left: 60px;
+            top: 20px;  
+        }
+        .feed-block{
+            display: block; 
+            width: 1000px; 
+            height: 350px; 
+            background-color: rgb(211, 216, 243);
+            margin-bottom: 40px;
+            margin-top: 30px;   
+            border-bottom-right-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .feed-block-positioner{
+            position: absolute; 
+            top: 110px; 
+            left: 100px; 
+        }
+        .feed-thumbnail-block{
+            display: inline-block; 
+            height: 350px; 
+            width: 550px;  
+            background-color: black; 
+        }
+        .feed-thumbnail-block img{
+            object-fit: cover; 
+        }
+        .video-heading{
+            display: block; 
+            position: relative;
+            width: 410px;  
+            background-color: none; 
+            padding: 2px;
+            left: 575px;
+            top: -345px; 
+            font-weight: bolder; 
+            font-size: 1.5em;
+            margin-bottom: 10px;   
+        }
+        .video-views{
+            display: block; 
+            position: relative; 
+            width: 410px; 
+            background-color: none; 
+            padding: 2px; 
+            left: 580px; 
+            top: -365px; 
+            margin-bottom: 10px; 
+            color: black; 
+            font-weight: bold; 
+        }
+        .video-description{
+            display: block; 
+            position: relative; 
+            width: 400px;
+            height: 170px;  
+            background-color: rgb(241, 242, 247);
+            margin-bottom: 10px; 
+            top: -380px; 
+            left: 580px;
+            border-radius: 10px;   
+            overflow: hidden; 
+            padding: 4px;
+            padding-left: 10px;  
+        } 
+        .feed-block-container:hover{
+            cursor: pointer;  
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="feed-container">
+        <h1 class="feed-heading">You're in <span style="color: rgb(1, 1, 59);"> Feed </span></h1>
+        <div class="feed-block-positioner">
+            <!-- for loop starts here -->
+            {% for item in returnArr %}
+                <div class="feed-block-container">
+                    {% for video in videosSelected %}
+                        {% if video.id == item %}
+                        
+                            {% for channel in channelsAll %}
+                                {% if channel["user_id"] == video.user_id %}
+                                    <h4>{{ channel["channel_name"] }} </h4>
+                                {% endif %}
+                            {% endfor %} 
+                        
+                            <div class="feed-block">
+                                <div class="feed-thumbnail-block">
+                                    <img src="{{ url_for('static', filename='thumbnails/1/manik-rathee-a8YV2C3yBMk-unsplash.jpg')}}" height="100%" width="100%">
+                                </div>
+                                <div class="video-heading">
+                                    <p>{{ video["title"] }}</p> 
+                                </div>
+                                <div class="video-views">
+                                    <p>3.5K Views</p> 
+                                </div>
+                                <div class="video-description">
+                                    <p>{{ video["description"] }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <!-- for loop ends here -->
+        </div>
+    </div>
+{% endblock %}  

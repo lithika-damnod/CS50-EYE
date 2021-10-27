@@ -1,0 +1,66 @@
+{% extends 'eyeStudioLayout.html' %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<script>
+    var tableLabels; 
+    var tableData; 
+    $.get("/api/get/month/channel/data", function(output){
+        tableLabels = output.labels; 
+        tableData = output.data;
+        console.log(tableLabels);  
+    });
+</script> 
+<div class="performance-container"> 
+    <div class="performance-chart">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script> 
+        let myChart = document.getElementById('myChart').getContext('2d'); 
+        let massPopChart = new Chart(myChart, {
+            type: 'bar', 
+            data: {
+                labels: "{{ reversedLabels }}", 
+                datasets: [{
+                    label: 'Video Analytics', 
+                    data: "{{ reversedData }}", 
+                    backgroundColor:'white',
+                    borderColor: 'white',
+                    spanGaps: true
+                }]
+            }, 
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <div class="subscibersOverview">
+        <p id="subscribersOverview-creatorName"></p>
+        <p id="currentSubscribers"><span id="subscibersINT">{{ totalSubscribers }}</span> Subscribers</p>
+        <p id="newSubscribers">{{ totalViews }} Views Total</p>
+        <p id="newLikes">{{ totalLikes }} Likes Total</p>
+        <p id="newComments">{{ totalComments }} Comments Total</p> 
+    </div>
+    <script> 
+        $.get("/api/get/channel/name", function(channel){
+            document.getElementById("subscribersOverview-creatorName").innerHTML = channel.channel
+        });     
+    </script> 
+
+    <script>
+        let currentSubscribers = parseInt(document.getElementById("subscibersINT").innerHTML); 
+        let newSubscribers = parseInt(document.getElementById("newSubscribers").innerHTML); 
+        let newLikes = parseInt(document.getElementById("newLikes").innerHTML); 
+        let newComments = parseInt(document.getElementById("newSubscribers").innerHTML);    
+
+    </script> 
+
+</div>    
+
+{% endblock %}

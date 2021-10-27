@@ -1,0 +1,63 @@
+{% extends 'eyeStudioLayout.html' %}
+
+{% block styles %}
+    <style>
+        
+        .performance-chart{
+            display: inline-block;
+            position: absolute; 
+            width: 600px; 
+            height: 300px;
+            left: 400px;  
+        }
+        .analytics-view-container{
+            display: inline-block; 
+            background-color: rgb(19, 18, 18); 
+            height: 500px; 
+            width: 1000px;    
+            margin-left: 300px;
+            margin-bottom: 200px; 
+            border-radius: 20px;
+            margin-top: -50px;
+        }
+        .analytics-heading{
+            color: white;
+            font-family: calibri;
+            margin-left: 30px;
+            margin-top: 30px;
+            margin-bottom: -30px;   
+        }
+    </style> 
+{% endblock %}
+
+{% block content %}
+    <script> 
+        document.getElementById("analyticsTab").classList.add("greyToblue");
+        document.getElementById("performanceTab").classList.remove("greyToblue");
+        document.getElementById("contentTab").classList.remove("greyToblue");
+    </script>
+    <div class="analytics-view-container">
+        <h1 class="analytics-heading">{{ video_name }}</h1>
+        <div class="performance-chart">
+            <canvas id="myChart"></canvas>
+        </div>
+        <script> 
+            let myChart = document.getElementById('myChart').getContext('2d'); 
+                let massPopChart = new Chart(myChart, {
+                    type: 'line', 
+                    data: {
+                        labels: "{{ reversedLabels }}", 
+                        datasets: [{
+                            label: 'Video Analytics', 
+                            data:"{{ reversedData }}", 
+                            backgroundColor:'white',
+                            borderColor: 'white',
+                            spanGaps: true
+                        }]
+                    }, 
+                    options: {}
+                });  
+        </script> 
+    </div>
+{% endblock %}
+    

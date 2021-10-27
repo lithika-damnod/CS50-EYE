@@ -1,0 +1,195 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title>Search "{{ searchArg }}"</title>
+{% endblock %}
+
+{% block styles %}
+    <style> 
+        .searchResult-container{
+            display: inline-block; 
+            height: 500px;  
+            width: 80%;
+            background-color: none; 
+            position: absolute; 
+            left: 150px;
+            top: 150px; 
+        }
+        .channel-block{
+            background-color: none; 
+            display: inline-block; 
+            height: 170px; 
+            width: 80%; 
+            position: relative; 
+            top: 10px;
+            margin-bottom: 15px; 
+        }
+        .profile-pic-container{
+            display: inline-block; 
+            width: 150px; 
+            height: 150px; 
+            border-radius: 50%; 
+            background-color: black;
+            position: absolute;  
+            left: 130px; 
+        }
+        .video-block{
+            background-color: none; 
+            display: inline-block; 
+            height: 220px; 
+            width: 80%; 
+            position: relative; 
+            top: 10px; 
+            margin-bottom: 15px; 
+        }
+        .thumbnail-container{
+            position: absolute; 
+            display: inline-block; 
+            width: 350px;
+            height: 200px; 
+            background-color: black;
+            top: 10px;
+            left: 40px;
+            border-radius: 10px;   
+        }
+        .video-data{
+            background-color: none; 
+            float: right; 
+            height: 220px; 
+            width: 435px; 
+            position: absolute; 
+            left: 420px; 
+            padding: 5px; 
+        }
+        .uploader-details{
+            display: inline-flex; 
+            height: 40px;
+            width: 200px;  
+            background-color: rgb(224, 218, 218); 
+            position: relative; 
+            top: 0px; 
+            padding: 15px;
+            border-radius: 10px;
+            align-items: center; 
+        }
+        .channel-art{
+            display: inline-block; 
+            height: 30px; 
+            width: 30px; 
+            background-color: black; 
+            border-radius: 50%; 
+
+        }
+        .channel-data{
+            background-color: none; 
+            float: right; 
+            height: 220px; 
+            width: 435px; 
+            position: absolute; 
+            left: 350px; 
+            top: -30px; 
+            padding: 5px;
+            background-color: none; 
+        }
+        .channel-block:hover{
+            cursor: pointer; 
+        }
+        .video-block:hover{
+            cursor: pointer; 
+        }
+    </style>
+{% endblock %}
+    
+{% block content %}
+    <script>
+        var x = 0;
+    </script>
+    <div class="searchResult-container">
+        <div class="channel-container">
+            {% for channel in suggestChannels %}
+            <div class="channel-block">
+                <p style="display: none; " class="channel-profile-pic-path">{{ channel["profilePicturePath"] }}</p>
+                <div class="profile-pic-container" style="overflow: hidden;">
+                    <img height="100%" width="100%" class="channel-IMAGE" style="object-fit: cover;">
+                </div>
+                <div class="channel-data">
+                    <p class="channel-head" style="font-weight: bolder; font-size: 1.5em; position: relative; top: 40px;" >{{ channel["channel_name"] }}</p>
+                    {% for profile in subscriber_count_Arr %}
+                        {% if profile.channel_id == channel["channel_id"] %} 
+                            <p class="channel-head" style="font-weight: bolder; font-size: 1em; position: relative; top: 30px; left: 5px; color: rgb(82, 79, 79); " > {{ profile.nSubscribers }} Subscribers </p> 
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <script> 
+                var profileAddress = document.getElementsByClassName("channel-profile-pic-path")[x].innerHTML; 
+                document.getElementsByClassName("channel-IMAGE")[x].src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", profileAddress);
+                document.getElementsByClassName("channel-block")[x].onclick = function () { 
+                    let videoIDD = "{{ channel['channel_id']}}"; 
+                    let videoURL = "/channel/" + videoIDD; 
+                    window.location.href = videoURL;
+                };
+                x++; 
+            </script> 
+            {% endfor %}
+        </div>
+        <script> 
+            var i = 0; 
+        </script> 
+        <div class="video-container">
+            {% for video in suggestVideos %}
+            <div class="video-block">
+                {% for thumb in suggestThumbnails %}
+                    {% if thumb["video_id"] == video["id"] %}
+                        <p style="display: none; " class="thumbAddress">{{ thumb["thumbnail_path"] }}</p>
+                    {% endif %}
+                {% endfor %}
+                <div class="thumbnail-container" style="overflow: hidden; ">
+                    <img height="100%" width="100%" class="thumbImage">
+                </div>
+                <script> 
+                    var thumbnailPath = document.getElementsByClassName("thumbAddress")[i].innerHTML; 
+                    document.getElementsByClassName("thumbImage")[i].src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", thumbnailPath);
+                </script> 
+                <div class="video-data">
+                    <p style="display: none; " class="videoId">{{ video["id"] }}</p>
+                    <p style="font-family: calibri; font-weight: bolder; font-size: 1.2em; position: absolute; top: 13px; "> {{ video["title"] }}</p>
+                    {% for view in viewsArray %}
+                        {% if view.videoId == video["id"] %}
+                            <p class="viewsInt" style="font-family:Arial, Helvetica, sans-serif; font-size: 1em; position: relative; top: 127px; left: 10px;"> {{ view.views }} Views </p> 
+                        {% endif %}
+                    {% endfor %}
+                    <p style="font-family:Arial, Helvetica, sans-serif; font-size: 0.9em; position: relative; top: 115px; left: 10px;"> {{ generateDateString(video["uploadTime"]) }}</p>
+                    <div class="uploader-details">
+                        <div class="channel-art" style="overflow: hidden; ">
+                            {% for sugChannel in channelsAll %}
+                               {% if sugChannel["user_id"] == video["user_id"] %}
+                                    <p style="display: none; " class="channelPICPath">{{ sugChannel["profilePicturePath"] }}</p>
+                                    <p style="display: none; " class="channelPICName">{{ sugChannel["channel_name"]}}</p>
+                               {% endif %} 
+                            {% endfor %}
+                            <img height="100%" width="100%" class="channelPIC" style="object-fit: cover;">
+                        </div>
+                        <p style="font-family:calibri; font-size: 1.1em; font-weight: bolder; color:rgb(99, 86, 86); position: relative; top: 6px; left: 10px;  " class="channelName"></p>
+                        <script> 
+                            var channelPICPath = document.getElementsByClassName("channelPICPath")[i].innerHTML; 
+                            var channelName = document.getElementsByClassName("channelPICName")[i].innerHTML;
+                            document.getElementsByClassName("channelPIC")[i].src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", channelPICPath);
+                            document.getElementsByClassName("channelName")[i].innerHTML = channelName; 
+                            //set views
+                            var uniqueAddress = document.getElementsByClassName("videoId")[i].innerHTML; 
+                            console.log(uniqueAddress);
+                            document.getElementsByClassName("video-block")[i].onclick = function () {  
+                                let videoIDDCOPIED = "{{ video['id']}}"; 
+                                let videoUrl = "/video/" + videoIDDCOPIED; 
+                                window.location.href = videoUrl;
+                            };
+                            i++;  
+                        </script> 
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div> 
+{% endblock %}

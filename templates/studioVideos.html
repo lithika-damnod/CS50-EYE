@@ -1,0 +1,86 @@
+{% extends 'eyeStudioLayout.html' %}
+
+{% block styles %}
+    <style> 
+        .clearAll{
+            display: none; 
+        }    
+    </style> 
+{% endblock %}
+
+{% block data %}
+    <script> 
+        document.getElementById("contentTab").classList.add("greyToblue");
+        document.getElementById("performanceTab").classList.remove("greyToblue"); 
+    </script> 
+
+    <!-- Content Tab -->
+    <div class="content-tab-container">
+        <div class="align-boxes">
+            <script> 
+                var i = 0; 
+            </script> 
+            {% for item in video %}
+            <div class="video-box">
+                <div class="thumbnail">
+                    <img src="" height="100%" width="100%" class="thumbnailImage">
+                </div>
+                {% for image in thumbnail %}
+                    {% if image["video_id"] == item["id"] %}
+                        <p style="display: none; " class="thumbnailAddress">{{ image["thumbnail_path"] }}</p>
+                    {% endif %}
+                {% endfor %}
+                <script> 
+                    var thumbnailPath = document.getElementsByClassName("thumbnailAddress")[i].innerHTML;  
+                    document.getElementsByClassName("thumbnailImage")[i].src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", thumbnailPath);  
+                </script> 
+                <div class="video-title">
+                    <p>{{ item["title"]}}</p>
+                </div>
+                <div class="video-description">
+                    <p>
+                        {{ item["description"] }}
+                    </p>
+                </div>
+                <div class="afterHover-container">
+                    <div class="resourceButton changeIconBg edit_btn" id="edit-button">
+                        <img src="{{ url_for('static', filename='images/icons8-pencil-64.png')}}" height="35px" width="35px">
+                    </div>
+                    <div class="resourceButton changeIconBg del-btn" id="trash-button">
+                        <img src="{{ url_for('static', filename='images/icons8-trash-96.png')}}" height="35px" width="35px">
+                    </div>
+                    <div class="resourceButton changeIconBg stream_btn" id="stream-button">
+                        <img src="{{ url_for('static', filename='images/icons8-play-90.png')}}" height="35px" width="35px">
+                    </div>
+                </div>
+                <script> 
+                    document.getElementsByClassName("edit_btn")[i].addEventListener("click", function(){
+                        let videoIDDCOPIED = "{{ item['id'] }}"; 
+                        let videoUrl = "/studio/content/edit/" + videoIDDCOPIED; 
+                        window.location.href = videoUrl;
+                    }); 
+                    document.getElementsByClassName("stream_btn")[i].addEventListener("click", function(){
+                        let videoIDDCOPIED = "{{ item['id'] }}"; 
+                        let videoUrl = "/video/" + videoIDDCOPIED; 
+                        window.location.href = videoUrl;
+                    });
+                    document.getElementsByClassName("del-btn")[i].addEventListener("click", function(){
+                        let videoIDDCOPIED = "{{ item['id'] }}";
+                        $.ajax({
+                            data: { 
+                                del_id: videoIDDCOPIED
+                            }, 
+                            type: 'POST', 
+                            url: "/delete/video"
+                        })    
+                        setTimeout(function(){
+                            window.location.reload(1);
+                        }, 1000);
+                    });
+                    i++;
+                </script> 
+            </div>
+            {% endfor %}
+        </div>
+    </div> 
+{% endblock %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CS50 EYE</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="An Online Streaming Service">
+        <meta name="keywords" content="Videos, CS50, Harvard , University">
+        <meta name="author" content="Lithika Damnod">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-signin-client_id" content="108735979264-ld86lgu2vd0u6kbrekhgnuvsllccuou1.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        
+        <style>
+            #headBackground{
+                height: 100px;
+                width: 100%;
+                background-color: white;
+                border-radius: 12px;
+
+            }
+            body{
+                background-color: #f3f3f3;
+            }
+            #logo{
+                display: inline-block;
+                position: absolute;
+                top: -5px;
+                left: -5px;
+            }
+            #emailSign{
+                display: inline-block;
+                background-color: #DE354C;
+                width: 300px;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                font-family: Calibri;
+                color: white;
+                font-size: 1.3em;
+                position: absolute;
+                top: 35%;
+                left: 35%;
+                margin: 20px;
+            }
+            #googleSign{
+
+                display: inline-block;
+                background-color: #DE354C;
+                width: 300px;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                font-family: Calibri;
+                color: white;
+                font-size: 1.3em;
+                position: absolute;
+                top: 50%;
+                left: 35%;
+                margin: 20px;
+            }
+            #facebookSign{
+                display: inline-block;
+                background-color: #DE354C;
+                width: 300px;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                font-family: Calibri;
+                color: white;
+                font-size: 1.3em;
+                position: absolute;
+                top: 65%;
+                left: 35%;
+                margin: 20px;
+            }
+            .signButtons{
+                display: inline-block;
+                width: 78px;
+                height: 78px; 
+                background-color: white; 
+            }
+            #googlePosition{
+                display:inline-block;
+                position: absolute;
+                top: 323px; 
+                left: 53.5%;
+            }
+            
+            
+        </style>
+    </head>
+    <body>
+        <div id="headBackground"></div>
+        <div id="logo">
+            <img src="files/logo.png" alt="CS50 EYE" height = "130px" width="150px">
+        </div>
+    </body>
+    <div id="emailSign">
+        <p>Sign in with Email</p>
+    </div>
+    <div id="googleSign" class="googlePosition">
+        <p>Sign in with </p>
+    </div>
+    <div class="g-signin2"></div>      
+    <div id="facebookSign">
+        <p>Sign in with </p>
+    </div>
+</html>

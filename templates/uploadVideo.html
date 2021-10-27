@@ -1,0 +1,438 @@
+<!DOCTYPE html> 
+<html> 
+    <head>
+        <title>CS50-EYE</title> 
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style> 
+             body{
+                    background-color: #EBEBEB;
+                }
+            html{
+                height: 100%;
+                width: 50%;
+            }
+                #logo{
+                    display: inline-block;
+                    position: absolute;
+                    top: 65px;
+                    left: 45%;
+                }
+                #signUpText{
+                    display: inline-block;
+                    position: absolute;
+                    top: 310px;
+                    left: 5%;
+                }
+                #inputFiles{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 250px; 
+                    left: 5%;
+                    overflow: hidden;
+                    height: 50px; 
+                    width: 100px; 
+                    background-color: red; 
+                }
+                button{
+                    border: none;
+                    background-color: #EBEBEB;
+                }
+                #formSpace #titleInput{
+                    width: 750px;   
+                }
+                textarea{
+                    resize: none;
+                }
+                .fileUpload{
+                    display: none;
+                }
+                .fileUploadButton{
+                    background-color: #5a4c4c; 
+                    border: none; 
+                    color: white; 
+                    padding: 15px 32px; 
+                    text-align: center; 
+                    text-decoration: none; 
+                    display: inline-block; 
+                    font-size: 16px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    width: 250px;
+                }
+                .fileUploadButton:hover{
+                    background-color: #f05742; 
+                }
+                .fileUploadButton:active{
+                    background-color: #974a40;
+                }
+                .fileUploadButton{
+                    background-color: #5a4c4c; 
+                    border: none; 
+                    color: white; 
+                    padding: 15px 32px; 
+                    text-align: center; 
+                    text-decoration: none; 
+                    display: inline-block; 
+                    font-size: 16px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    width: 250px;
+                }
+                .fileUploadButton:hover{
+                    background-color: #f05742; 
+                }
+                .fileUploadButton:active{
+                    background-color: #974a40;
+                }
+            
+                #videoTitle{
+                    position: absolute; 
+                    top: 400px;
+                    margin-left: 100px;
+                }
+                #inputVideoContainer{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 950px;
+                    margin-left: 150px;
+
+                }
+                #inputVideoContainer img{
+                    height: 35px; 
+                    width: 35px;
+                    position: absolute; 
+                    left: 15px;
+                    top: 9.5px;
+
+                }
+                #inputVideoContainer p{
+                    position: absolute; 
+                }
+                #videoDescription{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 550px; 
+                    margin-left: 100px; 
+                }
+                #videoDescription textarea{
+                    height: 300px;
+                    width: 750px;
+                }
+                #sideFormPanel{
+                    display: inline-flex; 
+                    position: fixed;
+                    top: 250px; 
+                    left: 1000px; 
+                    background-color: white;
+                    height: 340px;
+                    width: 300px;
+                    border-radius: 10px;
+                    border: 1px solid black;
+                }
+                #sideFormPanel #videoPreviewContainer{
+                    display: inline-block; 
+                    position: absolute; 
+                    background-color: black; 
+                    height: 200px; 
+                    width: 300px;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    border-top: 1px solid red;
+                    border-left:  1px solid red; 
+                    border-right: 1px solid red; 
+                }
+                #video-title-preview{
+                    position: absolute; 
+                    top: 210px;
+                    color: black;
+                    margin-left: 10px;
+                }
+                
+                #video-description-preview{
+                    position: absolute; 
+                    position: 280px;
+                    color: black;
+                    top: 265px;
+                    left: 15px;  
+                }
+                #inputThumbnailContainer img{
+                    height: 35px; 
+                    width: 35px;
+                    position: absolute; 
+                    left: 15px;
+                    top: 13px;
+                }
+                #inputThumbnailContainer{
+                    display: inline-block; 
+                    position: absolute; 
+                    top: 1020px;
+                    left: 0%;
+                    margin-left: 150px;
+                }
+                #inputThumbnailContainer button{
+                    width: 300px;
+                }
+                #uploadThumbnail{
+                    display: none;
+                }
+                
+                #goLive{
+                    display: none;
+                }
+                #bottomVideoBlock{
+                    display: inline-block;
+                    height: 400px; 
+                    width: 700px; 
+                    position: absolute; 
+                    top: 1150px;
+                    left: 100px;
+                    background-color: black;
+                }
+                #fullPreviewTitle{
+                    position: absolute; 
+                    top: 1570px;
+                    left: 100px;
+                    font-size: 1.5em;
+
+                }
+                #fullPreviewViews{
+                    position: absolute; 
+                    top: 1610px;
+                    left: 110px;
+                }
+                #fullPreviewHeart{
+                    position: absolute; 
+                    height: 35px; 
+                    width: 35px;
+                    top: 1630px;
+                    left: 650px;
+                }
+              #videoShareButton{
+                    position: absolute; 
+                    height: 35px; 
+                    width: 35px;
+                    top: 1629px;
+                    left: 750px;
+                }
+                #horizontalRay{
+                    display: inline-block;
+                    position: absolute;
+                    width: 780px; 
+                    height: 2px; 
+                    top: 1690px;
+                    left: 65px;
+                    border-radius: 10px;
+                    background-color: gray;
+                }
+                #fullPreviewDescription{
+                    color: black;   
+                }
+                #descriptionBOX{
+                    display: inline-block; 
+                    height: 300px; 
+                    width: 700px;
+                    position: absolute; 
+                    top: 1700px; 
+                    left: 110px;
+                    background-color:none;
+                }
+                #fullPreviewDescription{
+                    color: black; 
+                    font-size: 1.3em;
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+                }
+                #views{
+                    color: #707070; 
+                    font-size: 13px;
+                    position: absolute; 
+                    margin-left: 15px;
+                    top: 290px;
+                } 
+                .wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute; 
+  top: 1750px;
+  left: 300px;
+}
+
+.button {
+  width: 300px;
+  height: 60px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.button:hover {
+  background-color: #f05742;
+  box-shadow: 0px 15px 20px #ffaea3;
+  color: #fff;
+  transform: translateY(-7px);
+}
+.loader {
+  border: 16px solid red; /* Light grey */
+  border-top: 16px solid white; /* Blue */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+  position: absolute; 
+  top: 800px;
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+            .tag-container{
+                border: 2px solid rgb(235, 194, 194); 
+                padding: 10px;
+                border-radius: 5px;
+                display: inline-block;
+                position: relative;
+                top: 1150px;
+                margin-left: 100px;
+                height: fit-content; 
+                max-width: 300px; 
+                overflow-y: scroll; 
+                max-height: 300px; 
+                 
+            }
+            .tag-container .tag{
+                padding: 5px;
+                border: 1px solid rgb(240, 166, 166); 
+                margin: 5px;
+                border-radius: 3px;
+                background-color: rgb(223, 184, 184);
+                opacity: 80%;
+            }
+            .tag-container input{
+                flex: 1; 
+                font-size: 16px;
+                padding: 5px;
+                outline: none;
+                border: 0; 
+                border-radius: 6px;
+                margin-left: 10px;
+            }
+            #fakeSubmitButton{
+                position: relative;
+                top: -900px;  
+            }
+        </style>
+    </head>
+    <body>
+        <a href="/"><div id="logo">
+            <img src="{{url_for('static', filename='images/CS50 Eye logo transparent .png')}}"  alt="CS50 EYE" height = "150px" width="170px">
+        </div></a>
+        <div id="signUpText"> 
+            <p style="font-family: Segoe UI; font-size: 25px;">Video Details</p> 
+        </div>
+        <div class="form-group" id="formSpace">
+            <!--video details form starts here--> 
+            <form action="/upload" method="POST" enctype="multipart/form-data"> 
+                <input class="fileUpload" type="file" name="fileUpload" id="videoFile">
+                <input class="thumbnailUpload" type="file" name="thumbnailUpload" id="uploadThumbnail">
+                <div id="inputVideoContainer">
+                    <button class="fileUploadButton" type="button" id="chooseAVideo"> Choose a video</button>
+                    <img src="{{url_for('static', filename='images/video-camera.png')}}">
+                </div>
+                <div id="inputThumbnailContainer">
+                    <button class="fileUploadButton" type="button" id="chooseAThumbnail"> Choose a Thumbnail</button>
+                    <img src="{{url_for('static', filename='images/image.png')}}">
+                </div>  
+                       
+                <div id="videoTitle">
+                    <p style="font-family: 'Nunito', sans-serif;">Title</p>
+                    <textarea class="form-control" id="titleInput" maxlength="100" name="videoName"></textarea>
+                </div>
+                    <div id="videoDescription"> 
+                        <p style="font-family: 'Nunito', sans-serif"> Description </p>
+                        <textarea class="form-control" id="descriptionInput" maxlength = "5000" name="videoDescription"></textarea>
+                    </div>
+                    
+                    <input type="submit" style="display: none;" id="submit-button">
+                    <div class="wrap">
+                        <button class="button" type="submit" id="fakeSubmitButton">Publish</button>
+                    </div>
+
+            </form>
+                <div id="sideFormPanel">    
+                    <div id="videoPreviewContainer">
+                            <img src="" height="100%" width="100%" id="thumbnail-prev" style="background-color: black;"> 
+                            <p id="video-title-preview" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></p> 
+                            <strong><p id="video-description-preview" style="color: #707070;">Creator Name</p></strong>
+                            <p id="views">0 views ✇ Just Now</p> 
+                    </div>
+                </div>
+                <script> 
+                    document.getElementById("uploadThumbnail").addEventListener("change", function() { 
+                        let picName = document.getElementById("uploadThumbnail").files[0];     
+                        document.getElementById("thumbnail-prev").src = URL.createObjectURL(picName);
+                    });  
+                </script> 
+            <script> 
+                $('#titleInput').keyup(function() {
+                var text = $('#titleInput').val();
+                document.getElementById("video-title-preview").innerHTML = text; 
+                document.getElementById('fullPreviewTitle').innerHTML = text;
+                }); 
+
+                document.getElementById('chooseAVideo').addEventListener('click', function() {
+                    document.getElementById('videoFile').click(); 
+                });
+                document.getElementById('chooseAThumbnail').addEventListener('click', function() {
+                    document.getElementById('uploadThumbnail').click();
+                }); 
+
+            </script> 
+
+        </div>
+        
+        <script>  
+            $('#fullPreviewHeart').click(function(){
+                document.getElementById("fullPreviewHeart").src="{{url_for('static', filename='images/heart (1).png')}}";
+                
+            });
+
+            $("#descriptionInput").keyup(function () {
+                    var text = $("#descriptionInput").val();
+                    document.getElementById('fullPreviewDescription').innerHTML = text;
+            });
+ 
+        </script> 
+        <div class="loader"></div>
+    </body> 
+    <script> 
+        let fakeButton = document.getElementById('fakeSubmitButton'); 
+        fakeButton.addEventListener('click', function() {
+            bodySelected = document.getElementsByTagName('body')[0]; 
+            bodySelected.style.display = "none"; 
+            document.getElementsByClassName('loader').style.display = "display"; 
+            
+        });
+    </script>
+</html>     

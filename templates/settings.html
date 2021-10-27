@@ -1,0 +1,118 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+    <title>Settings</title> 
+{% endblock %}
+
+{% block styles %}
+    <style> 
+        #sideNavBar{
+            display: none; 
+        }
+        .settings-container{
+            background-color: white; 
+            display: inline-flex; 
+            height: 450px; 
+            width: 80%; 
+            border-radius: 10px; 
+            position: relative; 
+            left: 130px;
+            margin-top: 120px;
+            justify-content: center;    
+        }
+        .prev-prof-pic{
+            margin-top: 35px; 
+            height: 200px; 
+            width: 200px; 
+            border-radius: 50%; 
+            background-color: black; 
+            overflow: hidden; 
+        }
+        .prev-prof-pic img{
+            object-fit: cover;
+        }
+        .prev-prof-pic:hover{
+            border: 3px solid rgb(236, 160, 160); 
+        }
+        .prev-prof-pic:hover .hidden-secret-pic{ 
+            display: block; 
+        }
+        .hidden-secret-pic p{
+            font-size: 1.2em; 
+            color: rgb(233, 208, 208);   
+            font-weight: bolder;
+        }
+        .hidden-secret-pic{
+            position: absolute; 
+            top: 120px; 
+            left: 47%; 
+            display: none; 
+        }
+        #editPicInput{
+            display: none; 
+        }
+        #changeCurrent{
+            position: absolute; 
+            top: 265px;
+            left: 446px;  
+            width: 200px; 
+        }
+        button{ position: absolute; }
+        #discardButton{
+            top: 360px; 
+            left: 200px; 
+        }
+        #saveButton{
+            top: 360px;     
+            right: 200px; 
+        }
+    </style> 
+{% endblock %}
+
+{% block content %}
+
+    <div class="settings-container">
+        <p style="display: none; " id="currentPicPath">{{ currentPicPath["profilePicturePath"] }}</p>
+        <div class="prev-prof-pic">
+            <img src="" height="100%" width="100%" id="profilePic--prev">
+            <script> 
+                let thumbnailPath  = document.getElementById("currentPicPath").innerHTML;  
+                document.getElementById("profilePic--prev").src = "{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", thumbnailPath);
+            </script>
+            <div class="hidden-secret-pic">
+                <p>Change</p>
+            </div>
+        </div>
+        <div class="edit-form"> 
+            <form action="/settings" method="POST" enctype="multipart/form-data"> 
+                <input type="file" name="edit-pic" id="editPicInput" onchange="printWhenChange()" name="picFile">
+                <input type="text" name="prev-creatorName" id="changeCurrent" value="{{ currentPicPath['channel_name']}}" class="form-control" name="userName">
+                <input type="text" name="editStatus" id="editStatus" value="false" style="display: none;">
+                <button type="button" class="btn btn-danger" id="discardButton">Discard</button><br>
+                <button type="submit" class="btn btn-success" id="saveButton">Save</button>
+            </form>
+            <script> 
+                var picChange = false;   
+                function printWhenChange(){
+                    picChange = true; 
+                    document.getElementById("editStatus").value = picChange; 
+                    console.log("detected change -- file --", picChange); 
+                }  
+            </script>  
+        </div>  
+        <script>    
+            document.querySelector(".prev-prof-pic").addEventListener("click", function(){
+                document.getElementById("editPicInput").click(); 
+            }); 
+            document.getElementById("editPicInput").addEventListener("change", function() {
+                let picName = document.getElementById("editPicInput").files[0];     
+                document.getElementById("profilePic--prev").src = URL.createObjectURL(picName);                  
+            }); 
+            document.getElementById("discardButton").addEventListener("click", function(){
+                console.log("clicked-discard"); 
+                location.reload(); 
+            })
+        </script> 
+    </div>
+
+{% endblock %}

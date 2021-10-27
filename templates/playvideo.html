@@ -1,0 +1,895 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+{% for index in videos %}
+                    {% if str(index["id"]) == id %}
+                        <title>{{ index["title"] }} </title>
+                    {% endif %}
+                {% endfor %} 
+{% endblock %}
+
+{% block styles %}
+    <style>
+        
+        .container{
+            display: inline-flex; 
+            position: relative; 
+            background-color: none; 
+            height: 1000px; 
+            width: 65%; 
+            left: 130px;
+            top: 135px;
+        }
+        .suggestion-container{
+            display: inline-flex; 
+            position: relative; 
+            background-color: none; 
+            height: 1000px; 
+            width: 22.5%; 
+            float: right;
+            right: 16px; 
+            top: 135px;
+                   
+        }
+        .video-frame{
+            display: inline-flex; 
+            position: relative; 
+            background-color: none; 
+            justify-content: center; 
+            align-items: center; 
+            float: center; 
+            height: 450px; 
+            width: 850px;
+            margin-top: -10px;
+            margin-left: -20px;
+            margin-right: 10px;
+            background-color: black; 
+            cursor: pointer;
+        }
+        .video{
+            max-width: 850px; 
+            max-height: 450px;
+            min-width: 850px; 
+            min-height: 450px;
+            overflow: hidden;    
+        }
+        .red-bar{
+            display: inline-block;
+            height: 30px; 
+            width: 850px;
+            position: absolute;
+            background-color: red;
+            top: 93.25%; 
+            opacity: 0%;
+        }
+
+        .red-bar:hover{
+            opacity: 30%;
+        }
+        .red-juice{
+            display: inline-flex; 
+            height: 5px;  
+            background-color: red;
+            opacity: 500%;
+            position: relative; 
+            top: -18px; 
+            border-bottom-right-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+        #play-button-image{
+            position: absolute;
+            top: 7.5px;
+            margin-left: 15px;
+        }
+        #play-button-image:hover{
+            cursor: pointer; 
+        }
+        #pause-button-image{
+            position: absolute;
+            top: 7.5px;
+            margin-left: 16px;
+        }
+        #pause-button-image{
+            cursor: pointer;
+        }
+        .visibleNone{
+            display: none;
+        }
+        #muted-button-image{
+            position: absolute;
+            top: 3px; 
+            left: 50px;
+            display: none;
+
+        }
+        #notmuted-button-image{
+            position: absolute;
+            top: 3px;
+            left: 52px; 
+        }
+        .control-line{
+            display: inline-flex;
+            height: 3px;
+            width: 100px;
+            background-color: white;
+            position: absolute;
+            top: 48%;
+            left: 85px;
+        }
+        .control-ball{
+            display: inline-block; 
+            height:10px; 
+            width: 10px;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            top: 37%;
+            left: 185px;
+        }
+        .video-title-container{
+            display: flex; 
+            height: 75px; 
+            width: 850px;
+            display: flex; 
+            justify-content: left; 
+            align-items: center;
+            text-align: left; 
+            background-color: none; 
+            padding: 15px;
+            position: absolute; 
+            top: 585px;
+            left: 110px;
+            color: rgb(49, 49, 49);
+        }
+        #video-title{
+            font-size: 1.2em;
+            font-weight: bold;
+             
+        }
+        .solid-divide-ray{
+            display: inline-block; 
+            height: 3px; 
+            width: 250px;
+            background-color: black;
+            opacity: 70%; 
+            border-radius: 5px;
+            position: absolute;
+            top: 750px;
+            left: 643px;
+            
+        }
+        .viewsAndDatePosted{
+            display: inline-block; 
+            background-color: none; 
+            padding: 5px;
+            width: 350px;
+            position: absolute;
+            top: 665px; 
+            left: 123px;
+            
+        }
+        .viewsAndDatePosted p{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serifl; 
+            opacity: 70%;
+            font-size: 1.12em;
+        }
+        .user-channel-details-container{
+            display: inline-flex;
+            background-color: white; 
+            height: 300px; 
+            width: 350px; 
+            position: absolute;
+            top: 750px;
+            left: 130px;
+            border-radius: 5px;
+            justify-content: center; 
+            align-items: center;
+            
+        }
+        .userProfilePhoto-container{
+            display: inline-block; 
+            position: absolute; 
+            background-color: greenyellow; 
+            height: 100px; 
+            width: 100px; 
+            border-radius: 50%; 
+            top: 20px;
+            overflow: hidden;
+        }
+        .userProfilePhoto-container img{
+            min-width: 100px; 
+            min-height: 100px;
+            object-fit: cover;
+        }
+        .channelName{
+            display: inline-flex; 
+            position: absolute; 
+        }
+        .className p{
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .subscriber-count{
+            display: flex; 
+            position: absolute;
+            top: 155px;
+        }
+        .subscriber-count p{
+            font-family: 'Nunito', sans-serif;
+            font-size: 1em;     
+        }
+        .subscribe-button{
+            display: inline-flex; 
+            height: 40px; 
+            width: 150px;
+            background-color: red; 
+            position: relative;
+            border-radius: 5px;
+            top: 60px;
+        }
+        .subscribe-button p{
+            color: white; 
+            font-weight: bolder; 
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serifl; 
+            position: relative; 
+            top: 25%;
+            left: 25%;  
+        }
+        .subscribe-button:hover{
+            cursor: pointer;
+        }
+        .like{
+            position: absolute; 
+            object-fit: scale-down;
+            top: 770px;
+            left: 660px;
+                 
+        }
+        .share{
+            position: absolute; 
+            object-fit: scale-down; 
+            top: 770px; 
+            left: 830px;
+             
+        }
+        #likeCount{ 
+            position: absolute; 
+            top: 10px;
+            left: 63px;
+            font-weight: bolder;
+            
+        }
+        .popUp-share{
+            display: inline-flex; 
+            height: 300px; 
+            width: 350px; 
+            background-color: white; 
+            border-radius: 3px; 
+            position: absolute; 
+            left: -360px;
+            top: 70px; 
+
+        }
+        .displayNothing{
+            display: none;
+        }
+        .setBackgroundOpacity{
+            background-color: rgba(0, 0, 0, 0.0.1); 
+        }
+        .descriptionArea{
+            display: inline-flex; 
+            position: absolute;
+            top: 1100px;
+            left: 130px;  
+            justify-content: left; 
+            height: 1000px; 
+            width: 800px;
+            padding: 20px;
+            background-color: rgb(233, 216, 216); 
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+        .suggestionVideo-Container1{
+            display: inline-flex; 
+            height: 210px; 
+            width: 340px;
+            background-color: white;
+            position: absolute; 
+            right: 0px;
+            top: -1000px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: fill; 
+            overflow: hidden; 
+        }
+        .suggestionVideo-Container2{
+            display: inline-flex; 
+            height: 210px; 
+            width: 340px;
+            background-color: white;
+            position: absolute; 
+            right: 0px;
+            top: -765px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: fill; 
+            overflow: hidden; 
+        }
+        .suggestionVideo-Container3{
+            display: inline-flex; 
+            height: 210px; 
+            width: 340px;
+            background-color: white;
+            position: absolute; 
+            right: 0px;
+            top: -530px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: fill; 
+            overflow: hidden; 
+        }
+        .suggestionVideo-Container4{
+            display: inline-flex; 
+            height: 210px; 
+            width: 340px;
+            background-color: white;
+            position: absolute; 
+            right: 0px;
+            top: -295px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: fill; 
+            overflow: hidden; 
+        }
+        .suggestionVideo-Container5{
+            display: inline-flex; 
+            height: 210px; 
+            width: 340px;
+            background-color: white;
+            position: absolute; 
+            right: 0px;
+            top: -60px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: fill; 
+            overflow: hidden; 
+        }
+        .comment-container{
+            display: inline-flex; 
+            position: absolute; 
+            height: 700px;
+            width: 300px;
+            background-color: rgb(204, 207, 209);
+            left: 1000px;
+            top: 1350px;
+            padding: 20px;
+            margin: 5px;
+            border-radius: 5px; 
+            overflow-y: scroll; 
+        }
+        .input-comment{
+            display: inline-block; 
+            border: 1px solid rgb(32, 32, 32);
+            border-radius: 5px; 
+            padding: 20px;
+            background-color: rgb(233, 216, 216);
+            height: 150px;
+        }
+        #comment-submit-btn{
+            display: inline-flex;
+            position: absolute; 
+            top: 120px;
+            left: 50px;
+        
+        }
+        .comment-view-block{
+            display: inline-flex; 
+            background-color: white; 
+            height: 110px; 
+            width: 240px;
+            margin-top: 20px;
+            border-radius: 5px; 
+            
+        }
+        .view-comment{
+            display:inline-flex; 
+            background-color: none; 
+            height: 70px;
+            width: 230px;
+            position: absolute;  
+            margin: 5px;
+            margin-top: 35px;    
+        }
+        .suggestionVideo-Container1:hover{ 
+            background-color: rgba(0, 0, 0, 0.50); 
+            transition: 1s; 
+            cursor: pointer; 
+        }
+        .suggestionVideo-Container2:hover{ 
+            background-color: rgba(0, 0, 0, 0.50); 
+            transition: 1s; 
+            cursor: pointer; 
+        }
+        .suggestionVideo-Container3:hover{ 
+            background-color: rgba(0, 0, 0, 0.50); 
+            transition: 1s; 
+            cursor: pointer; 
+        }
+        .suggestionVideo-Container4:hover{ 
+            background-color: rgba(0, 0, 0, 0.50); 
+            transition: 1s; 
+            cursor: pointer; 
+        }
+        .suggestionVideo-Container5:hover{ 
+            background-color: rgba(0, 0, 0, 0.50); 
+            transition: 1s; 
+            cursor: pointer; 
+        } 
+        .suggestionVideo-Container1:hover img{
+            opacity: 0%; 
+        }   
+        .suggestionVideo-Container2:hover img{
+            opacity: 0%; 
+        }   
+        .suggestionVideo-Container3:hover img{
+            opacity: 0%; 
+        }   
+        .suggestionVideo-Container4:hover img{
+            opacity: 0%; 
+        }   
+        .suggestionVideo-Container5:hover img{
+            opacity: 0%; 
+        }   
+        #comm-TextArea{
+            width: 145%;
+            height:  100px; 
+            padding: 5px; 
+            resize: none; 
+        }
+        .comment-view-space{
+            background-color: none; 
+            height: 200px; 
+            width: 85%; 
+            position: absolute; 
+            top: 200px;
+        }
+        .comment-block{ 
+            display: inline-block; 
+            width: 100%;   
+            background-color: bisque;
+            height: fit-content;  
+            padding: 10px; 
+            border-radius: 10px;
+            border: 2px solid burlywood;
+            margin-bottom: 10px;   
+        }
+        .add-comment-head{
+            font-weight: bolder;
+        }
+        .add-comment-time-stamp{
+            position: relative; 
+            top: -15px;
+            font-size: 0.9em;   
+        }
+        .add-comment-description{
+            position: relative; 
+            top: -15px;
+        }
+    </style> 
+{% endblock %}
+
+{% block content %}
+        
+        <div class="container">
+            <div class="video-frame">
+                {% for index in videos %}
+                    {% if str(index["id"]) == id %}
+                        <p id="video-address" style="display: none;">{{ index["file_path"] }} </p> 
+                        <video src="" class="video" controls id="videoElement"></video> 
+                        <script>
+                            let videoAddress = document.getElementById("video-address").innerHTML; 
+                            document.getElementById("videoElement").src="{{ url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", videoAddress);
+                        </script>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="red-bar">
+                    <div class="red-juice"></div>
+                    <div class="buttons">
+                        <div class="play-pause-Button"> 
+                            <img src="{{ url_for('static', filename='images/play-button-arrowhead.png')}}" height="15px" width="15px" id="play-button-image">
+                            <img src="{{ url_for('static', filename='images/pause.png')}}" height="15px" width="15px" id="pause-button-image" class="visibleNone">
+                        </div>
+                            <img src="{{ url_for('static', filename='images/icons8-sound-speaker-24.png')}}" height="24px" width="24px" id="muted-button-image">
+                            <img src="{{ url_for('static', filename='images/icons8-sound-24.png')}}" height="24px" width="24px" id="notmuted-button-image">
+                            <div class="control-line"></div>
+                            <div class="control-ball"></div>
+                            <p style="display: none;" id="video++ID"> {{ id }} </p> 
+                            <script>
+                                let notmutedSound = document.getElementById('notmuted-button-image'); 
+                                let mutedSound = document.getElementById("muted-button-image"); 
+                                let sound_StartingPos = 85; 
+                                let sound_EndPs = 185;
+                                let ball = document.getElementsByClassName("control-ball")[0]; 
+                                
+                                ball.onmousedown = function(event){
+                                    ball.style.position = "absolute"; 
+                                    ball.style.zIndex = 1000; 
+
+                                    document.body.append(ball); 
+
+                                    function moveAt(pageX, pageY){
+                                        ball.style.left = pageX - ball.offsetWidth / 2 + 'px'; 
+                                    }
+
+                                    moveAt(event.pageX, event.pageY); 
+                                    
+                                    function onMouseMove(event){
+                                        moveAt(event.pageX, event.pageY); 
+                                    }
+
+                                    document.addEventListener('mousemove', onMouseMove); 
+
+                                    ball.onmouseup = function(){ 
+                                        document.removeEventListener('mousemove', onMouseMove); 
+                                        ball.onmouseup = null; 
+                                    };
+                                    ball.ondragstart = function() {
+                                        return false;
+                                    }; 
+                                }; 
+                                
+                                
+                            </script> 
+                        </div>
+                    </div>
+                </div> 
+            </div>
+                {% for index in videos %}
+                    {% if str(index["id"]) == id %}
+                    <div class="video-title-container">
+                            <p id="video-title">{{ index["title"] }}</p>     
+                    </div>
+                    <div class="viewsAndDatePosted">
+                        <p>{{generateViewString(viewCount)}} Views ᛭ {{ generateDateString(videoTime)}}</p>
+                    </div>
+                    <div class="user-channel-details-container">
+                        
+                            {% for item in channel %}
+                                {% if item["user_id"] == index["user_id"] %}
+                                    <div class="userProfilePhoto-container">
+                                        <p id="profilePicturePath" style="display: none;">{{ item["profilePicturePath"] }}</p>
+                                        <p id="channel_id" style="display: none;">{{ item["channel_id"] }}</p> 
+                                        <img src="" width="100%" height="100%" id="profile-Picture">
+                                        <script>
+                                            let profilePicture = document.getElementById("profilePicturePath").innerHTML; 
+                                            let channel_id_innerHTML = document.getElementById("channel_id").innerHTML; 
+                                            document.getElementById("profile-Picture").src = "{{ url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", profilePicture);
+                                            // redirect to chanel page
+                                            document.querySelector(".userProfilePhoto-container").addEventListener("click", function(){  
+                                                console.log("clicked");
+                                                let videoUrl = "/channel/" + channel_id_innerHTML; 
+                                                window.location.href = videoUrl;
+                                            }); 
+                                        </script>
+                                    </div>
+                                    <div class="channelName">
+                                        <p style="font-weight: bold; font-size: 1.2em;">{{ item["channel_name"] }}</p>
+                                    </div>
+                                    <div class="subscriber-count">
+                                        <p><span id="nSubscribers">{{ nSubscribers }}</span> Subscribers</p>
+                                    </div>
+                                    <div class="subscribe-button"   >
+                                        <p id="subscribeORsubscribed">Subscribe</p>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                    </div> 
+                    <div class="descriptionArea">
+                        <pre>
+                            {{ index["description"]}}
+                        </pre>
+                    </div>
+                    <div class="solid-divide-ray"></div>
+                    <div class="menuUnderRay"> 
+                        <div class="like">
+                            <img src="{{ url_for('static', filename='images/heart (2).png')}}" height="40px" widht="40px" id="likeImage"> 
+                            <p id="likeCount">{{ nLikes }}</p>
+                            <script>
+                                $(document).ready(function() {
+                                    $(".likeCount").innerHTML = "{{ nLikes }}" ; 
+                                    console.log("{{ nLikes }}");
+                                }); 
+                                 
+                            </script> 
+                        </div>
+                        <div class="share">
+                            <img src="{{ url_for('static', filename='images/share.png')}}" height="40px" width="40px">
+                            <div class="popUp-share displayNothing">
+                            </div>
+                            <script>
+                            </script> 
+                        </div>
+                    </div>
+                </div> 
+                <p id="existsLike" style="display: none; ">{{ existsLike }}</p>
+                <p id="existsSubscriber" style="display: none; ">{{ existsSubscriber }}</p>
+                <div class="suggestion-container">
+                    <div class="suggestionVideo-Container1">
+                        {% for item in thumbnailsAllSelected %}
+                            {% if item["video_id"] == suggestionVideos[0]["id"] %}
+                                <p style="display: none;" id="word-0">{{ item["thumbnail_path"] }}</p> 
+                            {% endif %}
+                        {% endfor %}
+                        <img src="" id="pic-0">
+                        <script>
+                            let urlZero = document.getElementById("word-0").innerHTML;  
+                            document.getElementById("pic-0").src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", urlZero);
+                        </script>
+                    </div>
+                    <div class="suggestionVideo-Container2">
+                        {% for item in thumbnailsAllSelected %}
+                            {% if item["video_id"] == suggestionVideos[1]["id"] %}
+                                <p style="display:none;" id="word-1">{{ item["thumbnail_path"] }}</p> 
+                            {% endif %}
+                        {% endfor %}
+                        <img src="" id="pic-1">
+                        <script>
+                            let urlOne = document.getElementById("word-1").innerHTML;  
+                            document.getElementById("pic-1").src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", urlOne);
+                        </script>
+                    </div>
+                    <div class="suggestionVideo-Container3">
+                        {% for item in thumbnailsAllSelected %}
+                            {% if item["video_id"] == suggestionVideos[2]["id"] %}
+                                <p style="display:none;" id="word-2">{{ item["thumbnail_path"] }}</p> 
+                            {% endif %}
+                        {% endfor %}
+                        <img src="" id="pic-2">
+                        <script>
+                            let urlTwo = document.getElementById("word-2").innerHTML;  
+                            document.getElementById("pic-2").src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", urlTwo);
+                        </script>
+                    </div>
+                    <div class="suggestionVideo-Container4">
+                        {% for item in thumbnailsAllSelected %}
+                            {% if item["video_id"] == suggestionVideos[3]["id"] %}
+                                <p style="display:none;" id="word-3">{{ item["thumbnail_path"] }}</p> 
+                            {% endif %}
+                        {% endfor %} 
+                        <img src="" id="pic-3">
+                        <script>
+                            let urlThree = document.getElementById("word-3").innerHTML;  
+                            document.getElementById("pic-3").src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", urlThree);
+                        </script>
+                    </div>
+                    <div class="suggestionVideo-Container5">
+                        {% for item in thumbnailsAllSelected %}
+                            {% if item["video_id"] == suggestionVideos[4]["id"] %}
+                                <p style="display:none;" id="word-4">{{ item["thumbnail_path"] }}</p> 
+                            {% endif %}
+                        {% endfor %}
+                        <img src="" id="pic-4">
+                        <script>
+                            let urlFour = document.getElementById("word-4").innerHTML;  
+                            document.getElementById("pic-4").src="{{url_for('static', filename='ADDSHARE2')}}".replace("ADDSHARE2", urlFour);
+                        </script>
+                        
+                    </div>
+                </div>
+                <!-- comment container -->
+                <div class="comment-container">
+                    <div class="comment-form">
+                        <form>
+                            <textarea type="text" placeholder="comment here" name="comment" id="comm-TextArea"></textarea>
+                            <button type="button" class="btn btn-danger" style="position: absolute; left: 95px; top: 130px; " id="commentSubmit">Comment</button>
+                        </form>
+                    </div>
+                    <script> 
+                        document.getElementById("commentSubmit").addEventListener("click", function(){
+                            let commentText = document.getElementById("comm-TextArea").value; 
+                            document.getElementById("comm-TextArea").value = "";
+                            let uniqueAddress = "{{ id }}";
+                            let postAddress = "/video/" + uniqueAddress;  
+                            console.log("videoId: " + uniqueAddress); 
+                            $.ajax({
+                                data: { 
+                                    commentDescription: commentText
+                                }, 
+                                type: 'POST', 
+                                url: postAddress
+                            }) 
+                    
+                            //manually adding comment from here.. 
+                            const commentAddSpace = document.getElementsByClassName("add-comments-manually-here")[0]; 
+                            let divElement = document.createElement("div"); 
+                            divElement.classList.add("comment-block"); 
+                            commentAddSpace.appendChild(divElement); 
+                            let uploader_name = document.createElement("p");
+                            $.get("/api/get/username", function(keywords){
+                                uploader_name.innerHTML = keywords.username
+                            });      
+                            //uploader_name.innerHTML = "Lithika Damnod"; 
+                            uploader_name.classList.add("add-comment-head"); 
+                            divElement.appendChild(uploader_name); 
+                            let time_stamp = document.createElement("p"); 
+                            time_stamp.innerHTML = "Just Now";
+                            time_stamp.classList.add("add-comment-time-stamp"); 
+                            divElement.appendChild(time_stamp);   
+                            let commentDescription = document.createElement("p"); 
+                            commentDescription.innerHTML = commentText; 
+                            commentDescription.classList.add("add-comment-description"); 
+                            divElement.appendChild(commentDescription); 
+                        }); 
+                    </script> 
+                    <div class="comment-view-space">
+                        <span class="add-comments-manually-here"></span>
+                        {% for comment in commentsAllSelected %}
+                            <div class="comment-block">
+                                {% for account in allAccounts %}
+                                    {% if account["id"] == comment["commenterId"] %}
+                                        <p style="font-weight: bolder; ">{{ account["firstName"] }} {{ account["lastName"] }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                                <p style="position: relative; top: -15px; font-size: 0.9em; "> {{ generateDateString(comment["commentedTime"]) }}</p>
+                                <p style="position: relative; top: -15px; ">{{ comment["commentDescription"] }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <script> 
+                    var video = document.getElementsByClassName("video")[0];
+                    document.getElementById("play-button-image").addEventListener('click', function() {
+                        
+                        video.play();
+                        document.getElementById("pause-button-image").classList.remove("visibleNone");
+                        document.getElementById("play-button-image").classList.add("visibleNone");
+                    });
+                    const shareButton = document.getElementsByClassName('share')[0]; 
+                    shareButton.addEventListener("click", function() {
+                        console.log("success"); 
+                        document.getElementsByClassName('popUp-share')[0].classList.remove("displayNothing"); 
+                        document.querySelector('body').classList.add("setBackgroundOpacity"); 
+                    });
+                    
+                    const likeButton = document.querySelector(".like");
+                    const subscribeButton = document.querySelector(".subscribe-button"); 
+                    let i=0; 
+                    let x=0;
+                    let existsLike = document.getElementById("existsLike").innerHTML.toString();
+                    let existsSubscriber = document.getElementById("existsSubscriber").innerHTML.toString();
+                    console.log(existsLike);  
+                    console.log(existsSubscriber); 
+                    if(existsLike == "True"){
+                        document.getElementById("likeImage").src="{{ url_for('static', filename='images/heart (1).png')}}";
+                        i++; 
+                    }
+                    if(existsSubscriber == "True"){
+                        document.getElementById("subscribeORsubscribed").innerHTML = "Subscribed";
+                        subscribeButton.style.backgroundColor = "#EE6E6E";
+                        x++;  
+                    } 
+
+                    likeButton.addEventListener("click", function() { 
+                        i++; 
+                        if(i%2 != 0){
+                            console.log("Liked"); 
+                            document.createElement("p")
+                            document.getElementById("likeImage").src="{{ url_for('static', filename='images/heart (1).png')}}"; 
+                            var status = "liked"; 
+                            let videoIDD =  document.getElementById("video++ID").innerHTML; 
+                            let normalPath = "/video/"; 
+                            let postPath = normalPath.concat(videoIDD);
+                            let likeCOUNT = document.getElementById("likeCount").innerHTML; 
+                            document.getElementById("likeCount").innerHTML = parseInt(likeCOUNT) + 1;  
+                            $.ajax({
+                                data: {
+                                    video__ID : videoIDD
+                                }, 
+                                type: 'POST', 
+                                url: '/api/add/like'
+                            })
+                        }
+                        else{
+                            console.log("Unliked"); 
+                            document.getElementById("likeImage").src="{{ url_for('static', filename='images/heart (2).png')}}";
+                            let videoIDD =  document.getElementById("video++ID").innerHTML; 
+                            let normalPath = "/video/"; 
+                            let postPath = normalPath.concat(videoIDD);
+                            status = "unliked"; 
+                            let likeCOUNT = document.getElementById("likeCount").innerHTML; 
+                            document.getElementById("likeCount").innerHTML = parseInt(likeCOUNT) - 1;
+                            $.ajax({
+                                data: { 
+                                    video__ID : videoIDD
+                                }, 
+                                type: 'POST', 
+                                url: '/api/remove/like'
+                            }) 
+                        }
+                    });
+
+                    subscribeButton.addEventListener("click", function() { 
+                        x++; 
+                        if(x%2 != 0){
+                            console.log("Subscribed"); 
+                            document.getElementById("subscribeORsubscribed").innerHTML = "Subscribed";
+                            subscribeButton.style.backgroundColor = "#EE6E6E";
+                            subscriber_id = "{{ getuserId }}"; 
+                            channel_id = "{{ channel_id }}";
+                            $.ajax({
+                                data: {
+                                    subscriber : subscriber_id, 
+                                    channel : channel_id
+                                }, 
+                                type: 'POST', 
+                                url: '/api/add/subscriber'
+                            })
+                            let currentSubscribers = parseInt(document.getElementById("nSubscribers").innerHTML); 
+                            document.getElementById("nSubscribers").innerHTML = currentSubscribers+1; 
+                            console.log("Added Subscriber -> "); 
+                        }
+                        else{
+                            console.log("Unsubscribed"); 
+                            document.getElementById("subscribeORsubscribed").innerHTML = "Subscribe";
+                            subscribeButton.style.backgroundColor = "red";  
+                            subscriber_id = "{{ getuserId }}"; 
+                            channel_id = "{{ channel_id }}";
+                            $.ajax({
+                                data: {
+                                    subscriber_id : subscriber_id, 
+                                    channel_id : channel_id
+                                }, 
+                                type: 'POST', 
+                                url: '/api/remove/subscriber'
+                            })
+                            let currentSubscribers = parseInt(document.getElementById("nSubscribers").innerHTML); 
+                            document.getElementById("nSubscribers").innerHTML = currentSubscribers-1;
+                            console.log("removed subscriber"); 
+                        }
+                    });  
+                    
+                </script>
+                    
+                    {% endif %}
+                {% endfor %}
+                <p style="display: none;" id="videoIDpara">{{ id }} </p>
+                <script>
+                    let videoFrame = document.getElementById("videoElement"); 
+                    var watchedTime; 
+                    let sendId = document.getElementById("videoIDpara").innerHTML.toString(); 
+                    videoFrame.addEventListener('timeupdate', function(){
+                        watchedTime = (videoFrame.currentTime / videoFrame.duration).toPrecision(2);    
+                        console.log(watchedTime); 
+                    }); 
+                    window.addEventListener('beforeunload', function(){
+                        $.ajax({
+                            data: {
+                                watchDURATION : watchedTime, 
+                                videooIDD: sendId
+                            }, 
+                            type: 'POST', 
+                            url: '/watchtime/registry'
+                        }) 
+                        
+                        console.log(watchTime); 
+                    });
+                    window.addEventListener('load', function(){
+                        $.ajax({
+                            data: { 
+                                videooIDD: sendId
+                            }, 
+                            type: 'POST', 
+                            url: '/watchhistory/registry'
+                        }) 
+                         
+                    });
+                </script>
+              
+
+{% endblock %}
