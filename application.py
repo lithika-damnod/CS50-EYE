@@ -217,8 +217,8 @@ def signUp():
         newLogin = loginDetails(firstName = post_firstName, lastName = post_lastName, emailAddress = post_Email, password = post_Password)
         db.session.add(newLogin)
         db.session.commit()
-        path = "E:/Project Files/cs50-eye/static/videos" 
-        thumbnailPath = "E:/Project Files/cs50-eye/static/thumbnails"
+        path = "./static/videos" 
+        thumbnailPath = "./static/thumbnails"
         pathAll = db.session.query(loginDetails).filter(loginDetails.emailAddress == post_Email).first()
         ownerId = str(pathAll.id)
         finalDirectory = os.path.join(path, ownerId)
@@ -226,7 +226,7 @@ def signUp():
         os.mkdir(finalDirectory) 
         os.mkdir(thumbnailDirectory)
         #WORKS PROPERLY
-        JSONPath = "E:/Project Files/cs50-eye/notification_JSONs"
+        JSONPath = "./notification_JSONs"
         JSONfile = ownerId +'.json'
         with open(os.path.join(JSONPath, JSONfile), 'w') as fp: 
             writeDict = {
@@ -255,8 +255,8 @@ def upload():
             pictureName = profile_picture.filename
             withprofile__cachePath = "profile_cache/"+ userIdUp + "/" + pictureName
             withoutprofile_cachePath = "profile_cache/"+ userIdUp
-            withoutmkdir = "E:/Project Files/cs50-eye/static/profile_cache"
-            withoutmkdirtwo = "E:/Project Files/cs50-eye/static/profile_cache/" + userIdUp 
+            withoutmkdir = "./static/profile_cache"
+            withoutmkdirtwo = "./static/profile_cache/" + userIdUp 
             profilePictureDirectory = os.path.join(withoutmkdir, userIdUp)
             os.mkdir(profilePictureDirectory)
             profile_picture.save(os.path.join(withoutmkdirtwo, profile_picture.filename))
@@ -281,8 +281,8 @@ def upload():
         userId = str(userAll.id)
         pathName = file.filename
         thumbnailName = thumbnail.filename
-        withoutContent = "E:/Project Files/cs50-eye/static/videos" + "/" + userId
-        withoutThumbnail = "E:/Project Files/cs50-eye/static/thumbnails" + "/" + userId
+        withoutContent = "./static/videos" + "/" + userId
+        withoutThumbnail = "./static/thumbnails" + "/" + userId
         filePath = "videos" + "/" + userId + "/" + pathName
         thumbnailPath =  "thumbnails" + "/" + userId + "/" + thumbnailName
         addVideo = videos(user_id=userId, file_path=filePath , title=title, description=description)
@@ -447,13 +447,13 @@ def studioEditVideo(id):
             vidRefId.description = description
         if thumbChangeStatus == "true":
             thumbnailName = newThumbnail.filename
-            withoutThumbnail = "E:/Project Files/cs50-eye/static/thumbnails" + "/" + getuserId
+            withoutThumbnail = "./static/thumbnails" + "/" + getuserId
             thumbnailPath =  "thumbnails" + "/" + getuserId + "/" + thumbnailName
             thumbRefId.thumbnail_path = thumbnailPath
             newThumbnail.save(os.path.join(withoutThumbnail, newThumbnail.filename))
         if videoChangeStatus == "true": 
             pathName = newVideo.filename
-            withoutContent = "E:/Project Files/cs50-eye/static/videos" + "/" + getuserId
+            withoutContent = "./static/videos" + "/" + getuserId
             filePath = "videos" + "/" + getuserId + "/" + pathName
             vidRefId.file_path = filePath
             newVideo.save(os.path.join(withoutContent, newVideo.filename))
@@ -674,7 +674,7 @@ def settings():
             pictureName = picFile.filename
             withprofile__cachePath = "profile_cache/"+ watchuserId + "/" + pictureName
             withoutprofile_cachePath = "profile_cache/"+ watchuserId
-            withoutmkdirtwo = "E:/Project Files/cs50-eye/static/profile_cache/" + watchuserId 
+            withoutmkdirtwo = "./static/profile_cache/" + watchuserId 
             picFile.save(os.path.join(withoutmkdirtwo, picFile.filename))
             defaultUser.profilePicturePath = withprofile__cachePath
             print("configuration - successful")
