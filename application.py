@@ -8,8 +8,6 @@ from sqlalchemy.sql import select
 import os 
 from ctypes import *
 from sqlalchemy.sql.sqltypes import String
-from suggestAlgorithm import *
-from suggestSimilar import *
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
 from generateViewsString import generateViewString
