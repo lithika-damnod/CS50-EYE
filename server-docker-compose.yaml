@@ -1,6 +1,0 @@
-version:'3'
-services:
-  cs50-eye:
-    image: ubuntu
-    ports: 
-      - 5000:5000
