@@ -10,6 +10,7 @@ WORKDIR "/home/app"
 
 RUN apt install -y apparmor apturl
 RUN pip3 install -r requirements.txt
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 
 EXPOSE 8080
 
