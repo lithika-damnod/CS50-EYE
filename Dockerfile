@@ -2,6 +2,11 @@ FROM ubuntu:latest
 
 RUN mkdir -p /home/app
 RUN apt-get -y update
+
+ENV TZ=Asia/Dubai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt install -y tzdata
+
 RUN apt-get install python3 -y 
 RUN apt install -y python3-pip
 
@@ -10,7 +15,6 @@ WORKDIR "/home/app"
 
 RUN apt install -y apparmor apturl
 RUN pip3 install -r requirements.txt
-RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 
 EXPOSE 8080
 
