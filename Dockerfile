@@ -1,21 +1,20 @@
 FROM ubuntu:latest
 
 RUN mkdir -p /home/app
-RUN apt-get -y update
-
-ENV TZ=Asia/Dubai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt install -y tzdata
-
-RUN apt-get install python3 -y 
-RUN apt install -y python3-pip
 
 COPY . /home/app
 WORKDIR "/home/app"
 
-RUN apt install -y apparmor apturl
-RUN pip3 install -r requirements.txt
+#RUN apt-get update
+RUN apt-get -y update
+RUN apt-get install python3 -y
+RUN apt install -y python3-pip
+RUN pip3 install Flask
+RUN pip3 install Flask-Session
+RUN pip3 install sqlalchemy
+RUN pip3 install Flask-SQLAlchemy
 
-EXPOSE 8080
+EXPOSE 5000
 
-CMD ["python3", "application.py"]
+ENTRYPOINT [ "python3" ]
+CMD ["application.py"]
