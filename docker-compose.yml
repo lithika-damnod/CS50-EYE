@@ -1,0 +1,13 @@
+version : '3'
+services:
+  webserver: 
+    image: cs50eye
+    ports: 
+      - 1000:8080
+      
+  mysqldb: 
+    image: mysql
+    ports: 
+      - 8000:8000
+    environment: 
+      - MYSQL_ROOT_PASSWORD=lithika
